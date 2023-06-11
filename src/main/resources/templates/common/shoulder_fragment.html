@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
-
 <!-- ======= フラグメント::Head ======= -->
 <head th:fragment="head(title)">
   <meta charset="utf-8">
@@ -40,9 +39,7 @@
 </head>
 <!-- ======= /フラグメント::Head ======= -->
 
-
 <body>
-
 
   <!-- ======= フラグメント::Header ======= -->
   <header th:fragment="header" id="header" class="header fixed-top d-flex align-items-center">
@@ -89,7 +86,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/">
+             <a class="dropdown-item d-flex align-items-center" th:href="@{/logout}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>ログアウト</span>
               </a>
@@ -103,7 +100,6 @@
 
   </header>
   <!-- ======= /フラグメント::Header ======= -->
-
 
   <!-- ======= フラグメント::Sidebar ======= -->
   <aside th:fragment="sidebar" id="sidebar" class="sidebar">
@@ -135,7 +131,6 @@
 
   </aside>
   <!-- ======= フラグメント::Sidebar ======= -->
-
 
   <!-- ======= ショルダー（ヘッダー、フッター）デザイン確認用のサンプルボディ ======= -->
   <main id="main" class="main">
@@ -191,7 +186,6 @@
     <script src="/assets/js/main.js"></script>
   </div>
   <!-- ======= /フラグメント::Footer ======= -->
-
 
 </body>
 </html>

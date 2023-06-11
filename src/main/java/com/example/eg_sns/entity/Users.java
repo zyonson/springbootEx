@@ -37,6 +37,9 @@ public class Users extends EntityBase {
 	/** 名前 */
 	@Column(name = "name", nullable = false)
 	private String name;
+	
+	@Column(name = "email_address", nullable = false)
+	private String email;
 
 	/** プロフィールアイコンURI */
 	@Column(name = "icon_uri", nullable = true)
