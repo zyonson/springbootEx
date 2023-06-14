@@ -12,7 +12,7 @@ public class RequestTopic  extends DtoBase {
 	@NotBlank(message = "タイトルを入力してください。")
 	@Size(max = 128, message =  "タイトルは最大128文字です。")
 	private String title;
-	
+
 	@NotBlank(message = "本文を入力してください。")
 	@Size(max = 2000, message = "本文は最大2000文字です。")
 	private String body;

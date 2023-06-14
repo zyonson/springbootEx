@@ -24,22 +24,22 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private UsersService usersService;
-	
+
 	@GetMapping("/login")
 	public String login(Model model) {
-		
+
 		log.info("ログイン画面のアクションが呼ばれました。");
-		
+
 		if(!model.containsAttribute("requestLogin")) {
 			model.addAttribute("requestLogin", new RequestLogin());
 		}
-		
+
 		Users users = (Users) session.getAttribute(AppConst.SESSION_KEY_LOGIN_INFO);
 		if(users != null) {
 			return "redirect:/home";
@@ -65,7 +65,6 @@ public class LoginController {
 			// ログイン画面へリダイレクト。
 			return "redirect:/login";
 		}
-
 
 		// ログインIDとパスワードを取得。
 		String loginId = requestLogin.getLoginId();
@@ -94,11 +93,11 @@ public class LoginController {
 		// ホーム画面へリダイレクト。
 		return "redirect:/home";
 	}
-	
+
 	@GetMapping("logout")
 	public String logout() {
 		session.removeAttribute(AppConst.SESSION_KEY_LOGIN_INFO);
-		
+
 		return "redirect:/login";
 	}
 }

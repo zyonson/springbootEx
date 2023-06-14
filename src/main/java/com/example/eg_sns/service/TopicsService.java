@@ -18,23 +18,23 @@ public class TopicsService {
 
 	@Autowired
 	private TopicsRepository repository;
-	
+
 	@Autowired
 	//private CommentsService commentsService;
-	
+
 	public List<Topics> findAllTopics(){
 		return (List<Topics>) repository.findByOrderByIdDesc();
 	}
-	
+
 	public Topics findTopics(Long id) {
 		log.info("トピックを検索します。:id={}", id);
-		
+
 		Topics topics = repository.findById(id).orElse(null);
 		log.info("ユーザー検索結果。:id={}, topics={}", id, topics);
-		
+
 		return topics;
 	}
-	
+
 	public Topics save(RequestTopic requestTopic, Long usersId) {
 		Topics topics = new Topics();
 		topics.setUsersId(usersId);
@@ -42,20 +42,20 @@ public class TopicsService {
 		topics.setBody(requestTopic.getBody());
 		return repository.save(topics);
 	}
-	
+
 	public void delete(Long topicsId, Long usersId) {
 		log.info("トピックを削除します。:topicsId={}, usersId={}", topicsId, usersId);
-		
+
 		Topics topics = repository.findByIdAndUsersId(topicsId, usersId).orElse(null);
 		if(topics == null) {
 			throw new AppNotFoundException();
 		}
-		
+
 		//List<Comments> commentsList = topics.getCommentsList();
 		//if (CollectionUtil.isNotEmpty(commentsList)) {
 		//	commentsService.delete(commentsList);
 		//}
-		
+
 		repository.delete(topics);
 	}
 }

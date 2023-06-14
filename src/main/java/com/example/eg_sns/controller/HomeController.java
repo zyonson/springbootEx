@@ -19,18 +19,18 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-	
+
 	@Autowired
 	private TopicsService topicsService;
-	
+
 	@GetMapping(path = {"", "/"})
 	public String home(Model model, @ModelAttribute("isSuccess") String isSuccess) {
 		log.info("ホーム画面のアクションが呼ばれました。");
-		
+
 		List<Topics> topicsList = topicsService.findAllTopics();
 		model.addAttribute("topicsList", topicsList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
-		
+
 		return "/home/index";
 	}
 }

@@ -1,9 +1,9 @@
 window.addEventListener('DOMContentLoaded', () => {
-	
+
 	const submit = document.querySelector('.submit');
-	
+
 	submit.addEventListener('click', (e) => {
-		
+
 		const title = document.querySelector("#post-title");
 		const errMsgTitle = document.querySelector('.err-msg-title');
 		if (!title.value) {
@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			errMsgTitle.textContent = '';
 			title.classList.remove('input-invalid');
 		}
-		
+
 		const body = document.querySelector("#post-body");
 		const errMsgBody = document.querySelector('.err-msg-body');
 		if (!body.value) {

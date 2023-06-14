@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     const submit = document.querySelector('.submit');
-    
+
     submit.addEventListener('click', (e) => {
 
         const name = document.querySelector('#name');
@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
             errMsgName.textContent ='';
             name.classList.remove('input-invalid');
         }
-        
+
         const email = document.querySelector("#yourEmail");
         const errMsgEmail = document.querySelector('.err-msg-email');
         if(!email.value){
@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
             errMsgEmail.textContent ='';
             email.classList.remove('input-invalid');
         }
-        
+
         const username = document.querySelector("#yourUsername");
         const errMsgUserName = document.querySelector('.err-msg-username');
         if(!username.value){

@@ -22,16 +22,16 @@ public class Topics extends EntityBase {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "users_id", nullable = false)
 	private Long usersId;
-	
+
 	@Column(name = "title", nullable = false)
 	private String title;
-	
+
 	@Column(name = "body", nullable = false)
 	private String body;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "users_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Users users;
