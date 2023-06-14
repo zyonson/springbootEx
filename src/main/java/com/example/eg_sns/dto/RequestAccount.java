@@ -24,8 +24,8 @@ public class RequestAccount extends DtoBase {
 	@Size(max = 32, message = "ログインIDは最大32文字です。")
 	private String loginId;
 	
-	@NotBlank(message = "emailを入力してください")
-	@Size(max = 256, message = "emailは最大256文字です。")
+	@NotBlank(message = "メールアドレスを入力してください")
+	@Size(max = 256, message = "メールアドレスは最大256文字です。")
 	private String email;
 
 	/** パスワード */
