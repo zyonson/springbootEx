@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.eg_sns.entity.Posts;
+import com.example.eg_sns.entity.PostImages;
 import com.example.eg_sns.service.PostImagesService;
 import com.example.eg_sns.service.PostsService;
 
@@ -31,7 +31,8 @@ public class HomeController {
 	public String home(Model model, @ModelAttribute("isSuccess") String isSuccess) {
 		log.info("ホーム画面のアクションが呼ばれました。");
 		//List<PostImages> postImagesList = topicsService.findAllPostImages();
-		List<Posts> postsList = postsService.findAllTopics();
+		//List<PostImages> postsList = postsImagesService.findAllPostImages();
+		List<PostImages> postsList = postImagesService.findAllPostImages();
 		model.addAttribute("postsList", postsList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 

@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -31,6 +32,19 @@ public class PostImagesService {
 	//public List<PostImages> findAllTopics(){
 	//	return (List<PostImages>) repository.findByOrderByIdDesc();
 	//}
+	
+	public List<PostImages> findAllPostImages(){
+		return (List<PostImages>) repository.findByOrderByIdDesc();
+	}
+
+	public PostImages findPostImage(Long id) {
+		log.info("トピックを検索します。:id={}", id);
+
+		PostImages postImages = repository.findById(id).orElse(null);
+		log.info("ユーザー検索結果。:id={}, postImages={}", id, postImages);
+
+		return postImages;
+	}
 
 	public PostImages save(String fileUri, Long usersId,Long postsId) {
 		PostImages postImages= new PostImages();

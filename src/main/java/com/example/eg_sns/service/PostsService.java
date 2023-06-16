@@ -22,15 +22,15 @@ public class PostsService {
 	@Autowired
 	//private CommentsService commentsService;
 
-	public List<Posts> findAllTopics(){
+	public List<Posts> findAllPosts(){
 		return (List<Posts>) repository.findByOrderByIdDesc();
 	}
 
-	public Posts findTopics(Long id) {
+	public Posts findPost(Long id) {
 		log.info("トピックを検索します。:id={}", id);
 
 		Posts posts = repository.findById(id).orElse(null);
-		log.info("ユーザー検索結果。:id={}, topics={}", id, posts);
+		log.info("ユーザー検索結果。:id={}, posts={}", id, posts);
 
 		return posts;
 	}

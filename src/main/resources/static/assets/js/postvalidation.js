@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			errMsgBody.textContent = '';
 			body.classList.remove('input-invalid');
 		}
-		
+
 		const file = document.querySelector("#formFile");
 		const errMsgFile = document.querySelector('.err-msg-file');
 		if (!file.value) {

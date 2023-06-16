@@ -37,11 +37,11 @@
             <div th:each="post:${postsList}">
               
               <div class="card">
-                <img src="/assets/img/card.jpg" class="card-img-top" alt="...">
+                <img th:src="${post.imageUri}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><td th:text="${post.title}"></td></h5>
+                  <h5 class="card-title"><td th:text="${post.posts.title}"></td></h5>
                   <p class="card-text">
-                    <td th:text="${post.body}"></td>
+                    <td th:text="${post.posts.body}"></td>
                   </p>
                 </div>
 
