@@ -27,5 +27,17 @@ window.addEventListener('DOMContentLoaded', () => {
 			errMsgBody.textContent = '';
 			body.classList.remove('input-invalid');
 		}
+		
+		const file = document.querySelector("#formFile");
+		const errMsgFile = document.querySelector('.err-msg-file');
+		if (!file.value) {
+			errMsgFile.classList.add("form-invalid");
+			errMsgFile.textContent = "ファイルを選択してください";
+			file.classList.add('input-invalid');
+			e.preventDefault();
+		} else {
+			errMsgFile.textContent = '';
+			file.classList.remove('input-invalid');
+		}
 	}, false);
 }, false);

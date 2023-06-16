@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.eg_sns.entity.Topics;
-import com.example.eg_sns.service.TopicsService;
+import com.example.eg_sns.entity.Posts;
+import com.example.eg_sns.service.PostImagesService;
+import com.example.eg_sns.service.PostsService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -21,14 +22,17 @@ import lombok.extern.log4j.Log4j2;
 public class HomeController {
 
 	@Autowired
-	private TopicsService topicsService;
+	private PostsService postsService;
+
+	@Autowired
+	private PostImagesService postImagesService;
 
 	@GetMapping(path = {"", "/"})
 	public String home(Model model, @ModelAttribute("isSuccess") String isSuccess) {
 		log.info("ホーム画面のアクションが呼ばれました。");
-
-		List<Topics> topicsList = topicsService.findAllTopics();
-		model.addAttribute("topicsList", topicsList);
+		//List<PostImages> postImagesList = topicsService.findAllPostImages();
+		List<Posts> postsList = postsService.findAllTopics();
+		model.addAttribute("postsList", postsList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 
 		return "/home/index";

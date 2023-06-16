@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "posts")
-public class Topics extends EntityBase {
+public class Posts extends EntityBase {
 
 	@Id
 	@Column(name = "id")

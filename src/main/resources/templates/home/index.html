@@ -34,27 +34,19 @@
             </div>
 
             <!-- Card with an image on top -->
-            <div th:each="topic:${topicsList}">
+            <div th:each="post:${postsList}">
               
               <div class="card">
                 <img src="/assets/img/card.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><td th:text="${topic.title}"></td></h5>
+                  <h5 class="card-title"><td th:text="${post.title}"></td></h5>
                   <p class="card-text">
-                    <td th:text="${topic.body}"></td>
+                    <td th:text="${post.body}"></td>
                   </p>
                 </div>
-                
-                <div class="card-footer" th:if="${users.id == topic.users.id}">
-                  <div class="row mb-3">
-                    <div class="col-sm-4">
-                      <a th:href="@{/topic/delete/{topicsId}(topicsId=${topic.id})}" class="btn btn-danger">削除する</a>
-                    </div>
-                  </div>
-                </div>
-                
+
                 <div class="card-body">
-                  
+
                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <div>
                       <i class="bi bi-exclamation-octagon me-1"></i>
@@ -62,7 +54,7 @@
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
-                  
+
                   <form class="row g-3">
                     <div class="col-md-12">
                       <input type="text" class="form-control" placeholder="コメントを入力...">
@@ -71,13 +63,13 @@
                       <button type="submit" class="btn btn-primary">コメントする</button>
                     </div>
                   </form>
-                
+
                 </div>
-                
+
                 <div class="card-body">
-                  
+
                   <div class="news">
-                    
+
                     <div class="post-item clearfix">
                       <img src="/assets/img/news-1.jpg" alt="">
                       <h4><a href="users-profile.jsp">前田裕司</a></h4>
@@ -131,30 +123,30 @@
               </div>
 
               <!-- Vertical Form -->
-              <form class="row g-3" method = "post" novalidate th:action = "@{topic/regist}" th:object="${RequestTopic}">
+              <form class="row g-3" method="post" novalidate th:action="@{/post/regist}" th:object="${RequestPost}" enctype="multipart/form-data">
                 
                 <div class="col-12">
-                  <label for="inputNanme4" class="form-label">タイトル</label>
+                  <label for="post-title" class="form-label">タイトル</label>
                   <input type="text" name="title" class="form-control" id="post-title">
                   <div class="err-msg-title"></div>
-                </div>
-
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">本文</label>
-                  <textarea name="body" class="form-control" id="post-body" style="height: 100px"></textarea>
-                  <div class="err-msg-body"></div>
-                </div>
-
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">写真</label>
-                  <input class="form-control" type="file" id="formFile">
-                </div>
-
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary submit">投稿する</button>
-                </div>
-
-              </form><!-- Vertical Form -->
+               </div>
+               
+               <div class="col-12">
+                 <label for="post-body" class="form-label">本文</label>
+                 <textarea name="body" class="form-control" id="post-body" style="height: 100px"></textarea>
+                 <div class="err-msg-body"></div>
+               </div>
+               
+               <div class="col-12">
+                 <label for="formFile" class="form-label">写真</label>
+                 <input class="form-control" type="file" id="formFile" name="profileFile">
+                 <div class="err-msg-file"></div>
+               </div>
+               
+               <div class="text-center">
+                 <button type="submit" class="btn btn-primary submit">投稿する</button>
+               </div>
+             </form><!-- Vertical Form -->
             </div>
           </div>
 

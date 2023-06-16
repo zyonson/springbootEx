@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RequestTopic  extends DtoBase {
+public class RequestPost  extends DtoBase {
 
 	@NotBlank(message = "タイトルを入力してください。")
 	@Size(max = 128, message =  "タイトルは最大128文字です。")
