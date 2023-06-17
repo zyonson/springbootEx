@@ -36,14 +36,9 @@ public class PostImagesService {
 	public List<PostImages> findAllPostImages(){
 		return (List<PostImages>) repository.findByOrderByIdDesc();
 	}
-
-	public PostImages findPostImage(Long id) {
-		log.info("トピックを検索します。:id={}", id);
-
-		PostImages postImages = repository.findById(id).orElse(null);
-		log.info("ユーザー検索結果。:id={}, postImages={}", id, postImages);
-
-		return postImages;
+ 
+	public List<PostImages> findPostImage(Long usersId){
+		return (List<PostImages>) repository.findByUsersIdOrderById(usersId);
 	}
 
 	public PostImages save(String fileUri, Long usersId,Long postsId) {

@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 @RequestMapping("/home")
-public class HomeController {
+public class HomeController  extends AppController{
 
 	@Autowired
 	private PostsService postsService;
@@ -33,8 +33,12 @@ public class HomeController {
 		//List<PostImages> postImagesList = topicsService.findAllPostImages();
 		//List<PostImages> postsList = postsImagesService.findAllPostImages();
 		List<PostImages> postsList = postImagesService.findAllPostImages();
+
+		Long usersId = getUsersId();
+
 		model.addAttribute("postsList", postsList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
+		model.addAttribute("usersId", usersId);
 
 		return "/home/index";
 	}

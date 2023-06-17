@@ -10,7 +10,7 @@ import com.example.eg_sns.entity.PostImages;
 
 public interface PostImagesRepository extends PagingAndSortingRepository<PostImages, Long>,CrudRepository<PostImages, Long>{
 	
-	Optional<PostImages> findById(Long id);
+	List<PostImages> findByUsersIdOrderById(Long usersId);
 
 	Optional<PostImages> findByIdAndUsersId(Long id, Long usersId);
 

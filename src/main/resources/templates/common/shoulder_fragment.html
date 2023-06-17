@@ -76,7 +76,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/profile/">
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/profile/{usersid}(usersId=${usersId})}">
                 <i class="bi bi-person"></i>
                 <span>プロフィールを見る</span>
               </a>
@@ -114,7 +114,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" th:href="@{/profile}">
+        <a class="nav-link collapsed" th:href="@{/profile/{usersid}(usersid=${usersId})}">
           <i class="bi bi-person"></i>
           <span>プロフィール</span>
         </a>
