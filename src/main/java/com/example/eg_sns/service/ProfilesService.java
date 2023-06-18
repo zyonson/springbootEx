@@ -8,47 +8,18 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.example.eg_sns.entity.PostImages;
-import com.example.eg_sns.repository.PostImagesRepository;
 
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class PostImagesService {
-
-	@Autowired
-	private PostImagesRepository repository;
-	
-	//public List<PostImages> findAllTopics(){
-	//	return (List<PostImages>) repository.findByOrderByIdDesc();
-	//}
-	
-	public List<PostImages> findAllPostImages(){
-		return (List<PostImages>) repository.findByOrderByIdDesc();
-	}
- 
-	public List<PostImages> findPostImage(Long usersId){
-		return (List<PostImages>) repository.findByUsersIdOrderById(usersId);
-	}
-
-	public PostImages save(String fileUri, Long usersId,Long postsId) {
-		PostImages postImages= new PostImages();
-		postImages.setUsersId(usersId);
-		postImages.setPostsId(postsId);
-		postImages.setImageUri(fileUri);
-		return repository.save(postImages);
-	}
-
+public class ProfilesService {
 	public String store(MultipartFile multipartFile) {
 
 		String fileName = multipartFile.getOriginalFilename();
@@ -120,5 +91,5 @@ public class PostImagesService {
 				}
 			}
 		}
-	}
+	}	
 }
