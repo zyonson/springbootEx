@@ -28,10 +28,10 @@
             <div class="card-body">
               <h5 class="card-title">今の気持ちをシェアしよう！</h5>
 
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <div>
+              <div th:if="${validationErrorsPost != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div th:each="errorPost : ${validationErrorsPost.getAllErrors()}">
                   <i class="bi bi-exclamation-octagon me-1"></i>
-                  <span>エラーメッセージを表示します。</span>
+                  <span th:text="${errorPost.getDefaultMessage()}">エラーメッセージを表示します。</span>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
@@ -114,8 +114,8 @@
   <div th:replace="~{common/shoulder_fragment::footer}"></div>
 
 　<script src="/assets/js/main.js"></script>
-  
-  
+  <script src="/assets/js/postvalidation.js"></script>
+
 </body>
 
 </html>

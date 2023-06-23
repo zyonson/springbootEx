@@ -42,9 +42,9 @@ public class PostController extends AppController {
 		if (result.hasErrors()) {
 			log.warn("バリデーションエラーが発生しました。:requestPost={}, result={}", requestPost, result);
 
-			redirectAttributes.addFlashAttribute("validationErrors", result);
+			redirectAttributes.addFlashAttribute("validationErrorsPost", result);
 			redirectAttributes.addFlashAttribute("requestPost", requestPost);
-
+			
 			return "redirect:/home";
 		}
 
@@ -53,8 +53,8 @@ public class PostController extends AppController {
 
 		    result.rejectValue("profileFile", StringUtil.BLANK, "画像ファイルを指定してください。");
 
-		    redirectAttributes.addFlashAttribute("validationErrors", result);
-		    redirectAttributes.addFlashAttribute("requestTopic", requestPost);
+		    redirectAttributes.addFlashAttribute("validationErrorsPost", result);
+		    redirectAttributes.addFlashAttribute("requestPost", requestPost);
 
 		    return "redirect:/home";
 		}

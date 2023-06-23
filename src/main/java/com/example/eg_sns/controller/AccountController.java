@@ -52,7 +52,6 @@ public class AccountController {
 			return "redirect:/account";
 		}
 
-
 		String loginId = requestAccount.getLoginId();
 
 		// ユーザー検索を行う。（※「ログインID」で検索を行い、すでに登録済みの場合エラー。）

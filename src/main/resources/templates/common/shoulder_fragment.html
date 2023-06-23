@@ -178,6 +178,13 @@
            <p class="card-text">
              <td th:text="${post.body}"></td>
            </p>
+           <div class="card-footer" th:if="${users.id == post.users.id}">
+             <div class="row mb-3">
+               <div class="col-sm-4">
+                 <a th:href="@{/post/delete/{postsId}(postsId=${post.id})}" class="btn btn-danger">削除する</a>
+               </div>
+             </div>
+           </div>
          </div>
 
          <div class="card-body">

@@ -15,6 +15,6 @@ public interface PostsRepository extends PagingAndSortingRepository<Posts, Long>
 	Optional<Posts> findByIdAndUsersId(Long id, Long usersId);
 
 	List<Posts> findByOrderByIdDesc();
-	
+
 	List<Posts> findByUsersIdOrderByIdDesc(Long usersId);
 }
