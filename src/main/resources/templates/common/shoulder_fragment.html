@@ -220,6 +220,13 @@
 		     	 <h4><th th:text="${postcomment.users.name}"></th></h4>
 				 <p th:text="${postcomment.comment}"></p>
 			   </div>
+			   <div class="card-footer" th:if="${users.id == postcomment.users.id}">
+                 <div class="row mb-3">
+                   <div class="col-sm-4">
+                     <a th:href="@{/comment/delete/{postcommentId}(postcommentId=${postcomment.id})}" class="btn btn-danger">削除する</a>
+                   </div>
+                 </div>
+               </div>
 			 </div>
            </div><!-- End sidebar recent posts-->
 

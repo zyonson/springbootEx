@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.eg_sns.core.AppNotFoundException;
 import com.example.eg_sns.dto.RequestPostComment;
 import com.example.eg_sns.entity.PostComments;
 import com.example.eg_sns.repository.PostCommentsRepository;
@@ -28,5 +29,16 @@ public class PostCommentsService {
 	
 	public void delete(List<PostComments> postCommentsList) {
 		repository.deleteAll(postCommentsList);
+	}
+
+	public void delete(Long id, Long usersId) {
+		log.info("トピックを削除します。:id={}, usersId={}", id, usersId);
+
+		PostComments postComments = repository.findByIdAndUsersId(id, usersId).orElse(null);
+		if(postComments == null) {
+			throw new AppNotFoundException();
+		}
+
+		repository.delete(postComments);
 	}
 }
