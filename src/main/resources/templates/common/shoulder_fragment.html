@@ -76,7 +76,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" th:href="@{/profile/{usersid}(usersId=${usersId})}">
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/profile/{usersid}(usersid=${usersId})}">
                 <i class="bi bi-person"></i>
                 <span>プロフィールを見る</span>
               </a>
@@ -153,11 +153,79 @@
     </section>
   </main><!-- End #main -->
   <!-- ======= /ショルダー（ヘッダー、フッター）デザイン確認用のサンプルボディ ======= -->
+ 
+ <div th:fragment="comment" class="col-lg-8">
+   <div class="row">
+
+     <div th:if="${isSuccess == true}" class="alert alert-success alert-dismissible fade show" role="alert">
+       <div>
+         <i class="bi bi-check-circle me-1"></i>
+         投稿しました。
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       </div>
+     </div>
+
+     <!-- Card with an image on top -->
+     <div th:each="post : ${postsList}">
+              
+       <div class="card">
+	     <div th:each="postimage : ${post.postImagesList}">
+		   <img th:src="${postimage.imageUri}" class="card-img-top" alt="...">
+         </div>
+                
+         <div class="card-body">
+           <h5 class="card-title"><td th:text="${post.title}"></td></h5>
+           <p class="card-text">
+             <td th:text="${post.body}"></td>
+           </p>
+         </div>
+
+         <div class="card-body">
+
+           <div th:if="${validationErrors != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+             <div th:each="error : ${validationErrors.getAllErrors()}">
+               <i class="bi bi-exclamation-octagon me-1"></i>
+               <span th:text="${error.getDefaultMessage()}"></span>
+             </div>
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+           </div>
+
+           <form class="row g-3" method="post" th:action="@{/comment/create}" th:object="${requestPostComment}">
+
+             <input type="hidden" name="postsId" th:value="${post.id}">
+             <div class="col-md-12">
+               <input type="text" class="form-control comment" name="comment" id="comment" placeholder="コメントを入力...">
+             </div>
+             <div class="err-msg-comment"></div>
+             <div class="text-center">
+               <button type="submit" class="btn btn-primary comment-submit">コメントする</button>
+             </div>
+
+           </form>
+         </div>
+
+         <div class="card-body">
+
+           <div class="news">
+             <div th:each="postcomment : ${post.postCommentsList}">
+		       <div class="post-item clearfix">
+		         <img th:src="${postcomment.users.iconUri}" alt="user-icon">
+		     	 <h4><th th:text="${postcomment.users.name}"></th></h4>
+				 <p th:text="${postcomment.comment}"></p>
+			   </div>
+			 </div>
+           </div><!-- End sidebar recent posts-->
+
+         </div>
+       </div>
+     </div>
+   </div>
+ </div><!-- End Left side columns -->
 
   <!-- ======= フラグメント::Footer ======= -->
   <div th:fragment="footer">
     <footer id="footer" class="footer">
-      <div class="copyright">
+       <div class="copyright">
         &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
@@ -183,6 +251,7 @@
 
     <!-- Template Main JS File -->
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/commentvalidation.js"></script>
   </div>
   <!-- ======= /フラグメント::Footer ======= -->
 

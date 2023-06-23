@@ -20,83 +20,8 @@
 
     <section class="section dashboard">
       <div class="row">
-        <div class="col-lg-8">
-          <div class="row">
-
-            <!-- Card with an image on top -->
-            <div th:each="post:${postsList}">
-              
-              <div class="card">
-                <img th:src="${post.imageUri}" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><td th:text="${post.posts.title}"></td></h5>
-                  <p class="card-text">
-                    <td th:text="${post.posts.body}"></td>
-                  </p>
-                </div>
-
-                <div class="card-body">
-
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <div>
-                      <i class="bi bi-exclamation-octagon me-1"></i>
-                      <span>エラーメッセージを表示します。</span>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-
-                  <form class="row g-3">
-                    <div class="col-md-12">
-                      <input type="text" class="form-control" placeholder="コメントを入力...">
-                    </div>
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">コメントする</button>
-                    </div>
-                  </form>
-
-                </div>
-
-                <div class="card-body">
-
-                  <div class="news">
-
-                    <div class="post-item clearfix">
-                      <img src="/assets/img/news-1.jpg" alt="">
-                      <h4><a href="users-profile.jsp">前田裕司</a></h4>
-                      <p>ハヤシライス、ピリ辛味噌バターコーンのスープパスタを食べてきました。...</p>
-                    </div>
-
-                    <div class="post-item clearfix">
-                      <img src="/assets/img/news-2.jpg" alt="">
-                      <h4><a href="users-profile.jsp">深沢雅彦</a></h4>
-                      <p>ハイビスカス香るまろやかなホットカクテルで、冬の寒さをくつろぎながら乗り切りましょう！...</p>
-                    </div>
-
-                    <div class="post-item clearfix">
-                      <img src="/assets/img/news-3.jpg" alt="">
-                      <h4><a href="users-profile.jsp">哀川涼</a></h4>
-                      <p>新しい季節を迎え、新しい門出を迎えるお客様へポール・スチュアートの特別なメニューをご用意しました。...</p>
-                    </div>
-
-                    <div class="post-item clearfix">
-                      <img src="/assets/img/news-4.jpg" alt="">
-                      <h4><a href="users-profile.jsp">奥山恵子</a></h4>
-                      <p>トライアスロンの練習は疲労をもたらします。でも習慣にしている練習をやめてしまうと、もっと体が疲労するというのです。...</p>
-                    </div>
-
-                    <div class="post-item clearfix">
-                      <img src="/assets/img/news-5.jpg" alt="">
-                      <h4><a href="users-profile.jsp">矢部将也</a></h4>
-                      <p>東京は、日中は日差しが出て少し気温が上がったように感じます...</p>
-                    </div>
-
-                  </div><!-- End sidebar recent posts-->
-                </div>
-              </div>
-            </div><!-- End sidebar recent posts-->
-          </div>
-        </div>
-
+        <div th:replace="~{common/shoulder_fragment::comment}"></div>
+        
         <div class="col-lg-4">
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -207,30 +132,34 @@
                   </div>
 
                   <!-- Change Password Form -->
-                  <form>
+                  <form method="post" novalidate th:action="@{/profile/editpassword}" th:object="${RequestPassword}">
+
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label">現在のパスワード</label>
                       <div class="col-md-8 col-lg-8">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input name="password" type="password" class="form-control" id="password">
                       </div>
+                      <div class="err-msg-password"></div>
                     </div>
-
+                    
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-4 col-form-label">新しいパスワード</label>
                       <div class="col-md-8 col-lg-8">
                         <input name="newpassword" type="password" class="form-control" id="newPassword">
                       </div>
+                      <div class="err-msg-newpassword"></div>
                     </div>
-
+                    
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label">新しいパスワードを再入力</label>
                       <div class="col-md-8 col-lg-8">
                         <input name="renewpassword" type="password" class="form-control" id="renewPassword">
                       </div>
+                      <div class="err-msg-renewpassword"></div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">パスワードを変更</button>
+                      <button type="submit" class="btn btn-primary passwordsubmit">パスワードを変更</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -252,6 +181,7 @@
    
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/profilevalidation.js"></script>
+  <script src="/assets/js/passwordvalidation.js"></script>
 </body>
 
 </html>

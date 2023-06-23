@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.eg_sns.dto.RequestPassword;
 import com.example.eg_sns.dto.RequestProfile;
-import com.example.eg_sns.entity.PostImages;
+import com.example.eg_sns.entity.Posts;
 import com.example.eg_sns.entity.Users;
 import com.example.eg_sns.service.PostImagesService;
 import com.example.eg_sns.service.PostsService;
@@ -47,7 +48,7 @@ public class ProfileController extends AppController{
 @GetMapping("{usersid}")
     public String profile(Model model, @PathVariable("usersid") Long usersId){
 
-	    List<PostImages> postsList = postImagesService.findPostImage(usersId);
+	    List<Posts> postsList = postsService.findPost(usersId);
 
 	    Users user = getUsers();
 
@@ -98,5 +99,29 @@ public String edit(@Validated @ModelAttribute RequestProfile requestProfile,
 	usersService.save(users);
 	
 	return "redirect:/home";
+}
+
+@PostMapping("/editpassword")
+  public String editpassword(@Validated @ModelAttribute RequestPassword requestpassword,Model model,
+		  BindingResult result,
+		  RedirectAttributes redirectAttributes) {
+	Users user = getUsers();
+	Long usersid = user.getId();
+	if(!(user.getPassword().equals(requestpassword.getPassword()))) {
+		model.addAttribute("usersid", usersid);
+		
+		redirectAttributes.addFlashAttribute("validationErrors", result);
+        redirectAttributes.addFlashAttribute("requestProfile", requestpassword);
+	    
+		return "redirect:/profile/" + usersid;
+	}else if(!(requestpassword.getNewpassword().equals(requestpassword.getRenewpassword()))) {
+		model.addAttribute("usersid", usersid);
+		return "redirect:/profile/" + usersid;
+	}else {
+	user.setPassword(requestpassword.getNewpassword());
+	usersService.save(user);
+
+	return "redirect:/home";
+	}
 }
 }

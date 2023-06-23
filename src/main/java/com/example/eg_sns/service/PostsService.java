@@ -25,15 +25,19 @@ public class PostsService {
 	public List<Posts> findAllPosts(){
 		return (List<Posts>) repository.findByOrderByIdDesc();
 	}
-
-	public Posts findPost(Long id) {
-		log.info("トピックを検索します。:id={}", id);
-
-		Posts posts = repository.findById(id).orElse(null);
-		log.info("ユーザー検索結果。:id={}, posts={}", id, posts);
-
-		return posts;
+	
+	public List<Posts> findPost(Long usersId){
+		return (List<Posts>) repository.findByUsersIdOrderByIdDesc(usersId);
 	}
+
+//	public Posts findPost(Long id) {
+//		log.info("トピックを検索します。:id={}", id);
+
+//		Posts posts = repository.findById(id).orElse(null);
+//		log.info("ユーザー検索結果。:id={}, posts={}", id, posts);
+
+//		return posts;
+//}
 
 	public Posts save(RequestPost requestPost, Long usersId) {
 		Posts posts = new Posts();

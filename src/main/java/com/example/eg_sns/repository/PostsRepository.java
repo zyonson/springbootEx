@@ -10,9 +10,11 @@ import com.example.eg_sns.entity.Posts;
 
 public interface PostsRepository extends PagingAndSortingRepository<Posts, Long>, CrudRepository<Posts, Long>{
 
-	Optional<Posts> findById(Long id);
+	Optional<Posts> findById(Long usersid);
 
 	Optional<Posts> findByIdAndUsersId(Long id, Long usersId);
 
 	List<Posts> findByOrderByIdDesc();
+	
+	List<Posts> findByUsersIdOrderByIdDesc(Long usersId);
 }

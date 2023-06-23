@@ -22,5 +22,4 @@ public class RequestProfile extends DtoBase{
 	private String iconUri;
 
 	private String profileFileHidden;
-
 }
