@@ -1,5 +1,7 @@
 package com.example.eg_sns.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -30,4 +32,6 @@ public interface UsersRepository extends PagingAndSortingRepository<Users, Long>
 	 * @return ユーザー情報を返す。
 	 */
 	Users findByLoginIdAndPassword(String loginId, String password);
+	
+	Optional<Users> findById(Long id);
 }

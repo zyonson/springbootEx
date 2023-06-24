@@ -37,6 +37,12 @@ public class UsersService {
 
 		return users;
 	}
+	
+	public Users search(Long id) {
+		Users users = repository.findById(id).orElse(null);;
+
+		return users;
+	}
 
 	/**
 	 * ユーザー検索を行う。

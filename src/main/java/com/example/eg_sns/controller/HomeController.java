@@ -39,7 +39,11 @@ public class HomeController  extends AppController{
 		model.addAttribute("postsList", postsList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 		model.addAttribute("usersId", usersId);
+		
+		log.info("postsList: {}", postsList);
+		log.info("postsList: {}", postsList.get(0));
 
+        
 		return "/home/index";
 	}
 }
