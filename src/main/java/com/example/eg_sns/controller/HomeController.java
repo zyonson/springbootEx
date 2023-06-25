@@ -30,19 +30,14 @@ public class HomeController  extends AppController{
 	@GetMapping(path = {"", "/"})
 	public String home(Model model, @ModelAttribute("isSuccess") String isSuccess) {
 		log.info("ホーム画面のアクションが呼ばれました。");
-		//List<PostImages> postImagesList = topicsService.findAllPostImages();
+
 	    List<Posts> postsList = postsService.findAllPosts();
-		//List<PostImages> postsList = postImagesService.findAllPostImages();
 
 		Long usersId = getUsersId();
 
 		model.addAttribute("postsList", postsList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 		model.addAttribute("usersId", usersId);
-		
-		log.info("postsList: {}", postsList);
-		log.info("postsList: {}", postsList.get(0));
-
         
 		return "/home/index";
 	}

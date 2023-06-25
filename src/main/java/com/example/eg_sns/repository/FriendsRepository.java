@@ -9,7 +9,7 @@ import com.example.eg_sns.entity.Friends;
 
 public interface FriendsRepository extends PagingAndSortingRepository<Friends, Long>, CrudRepository<Friends, Long> {
 
-	List<Friends> findByUsersIdOrderById(Long usersId);
+	List<Friends> findByUsersIdAndApprovalStatusIn(Long usersId, List<Long> approvalStatusList);
 	List<Friends> findByFriendUsersIdOrderById(Long friendUsersId);
+	Friends findByUsersIdAndFriendUsersId(Long usersId, Long friendUsersId);
 }
-

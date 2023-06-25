@@ -1,5 +1,6 @@
 package com.example.eg_sns.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,18 @@ public class FriendController extends AppController{
 
 	@Autowired
 	private FriendsService friendsService;
-	
+
 	@Autowired
 	private UsersService usersService;
 
 	@GetMapping("/list")
 	public String list(Model model) {
 		Long usersId = getUsersId();
-		List<Friends> friendsList = friendsService.sendFriends(usersId);
+		List<Friends> friendsList = friendsService.sendFriends(usersId, Arrays.asList(1L, 3L));
 		model.addAttribute("usersId", usersId);
 		model.addAttribute("friendsList", friendsList);
 
 		log.info("friendsList: {}", friendsList);
-		log.info("friendsList: {}", friendsList.get(0));
 		return "/friend/list";
 	}
 

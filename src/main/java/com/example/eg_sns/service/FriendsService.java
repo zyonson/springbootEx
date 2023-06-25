@@ -18,8 +18,8 @@ public class FriendsService {
 	@Autowired
 	private FriendsRepository repository;
 
-	public List<Friends> sendFriends(Long usersId){
-		return (List<Friends>) repository.findByUsersIdOrderById(usersId);
+	public List<Friends> sendFriends(Long usersId, List<Long> approvalStatusList){
+		return (List<Friends>) repository.findByUsersIdAndApprovalStatusIn(usersId, approvalStatusList);
 	}
 
 	public List<Friends> findFriends(Long friendUsersId){
@@ -27,10 +27,21 @@ public class FriendsService {
 	}
 	
 	public Friends save(RequestFriend requestFriend, Long users) {
-		Friends friends = new Friends();
-		friends.setUsersId(users);
-		friends.setFriendUsersId(requestFriend.getFriendUsersId());
-		friends.setApprovalStatus(requestFriend.getApprovalStatus());
-		return repository.save(friends);
+        if (repository.findByUsersIdAndFriendUsersId(users, requestFriend.getFriendUsersId()) != null) {
+        	return null;
+        }else {
+		Friends sendRequest = new Friends();
+		sendRequest.setUsersId(users);
+		sendRequest.setFriendUsersId(requestFriend.getFriendUsersId());
+		sendRequest.setApprovalStatus(1L);
+		repository.save(sendRequest);
+
+		Friends receiverRequest = new Friends();
+		receiverRequest.setUsersId(requestFriend.getFriendUsersId());
+		receiverRequest.setFriendUsersId(users);
+		receiverRequest.setApprovalStatus(2L);
+		repository.save(receiverRequest);
+		return null;
+        }
 	}
 }

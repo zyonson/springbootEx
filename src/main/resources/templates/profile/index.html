@@ -32,7 +32,6 @@
                 <div class="social-links mt-2">
                   <form th:action="@{/friend/offer}" method="post" th:object="${RequestFriend}">
                     <input type="hidden" name="friendUsersId" th:value="${user.id}">
-                    <input type="hidden" name="approvalStatus" th:value="1">
                     <button type="submit" class="btn btn-primary rounded-pill">友達申請</button>
                   </form>
                 </div>

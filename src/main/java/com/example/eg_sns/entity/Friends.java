@@ -32,8 +32,7 @@ public class Friends extends EntityBase {
 	@Column(name = "approval_status", nullable = false)
 	private Long approvalStatus;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "users_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Users users;
-
 }
