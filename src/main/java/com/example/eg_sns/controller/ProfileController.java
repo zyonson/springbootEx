@@ -22,7 +22,7 @@ import com.example.eg_sns.entity.Posts;
 import com.example.eg_sns.entity.Users;
 import com.example.eg_sns.service.PostImagesService;
 import com.example.eg_sns.service.PostsService;
-import com.example.eg_sns.service.ProfilesService;
+import com.example.eg_sns.service.StoragesService;
 import com.example.eg_sns.service.UsersService;
 import com.example.eg_sns.util.StringUtil;
 
@@ -43,86 +43,96 @@ public class ProfileController extends AppController{
 	private UsersService usersService;
 
 	@Autowired
-	private ProfilesService profilesService;
+	private StoragesService storagesService;
 
-  @GetMapping("{usersid}")
-    public String profile(Model model, @PathVariable("usersid") Long usersId){
+    @GetMapping("{usersid}")
+        public String profile(Model model, @PathVariable("usersid") Long usersId){
 
-	    List<Posts> postsList = postsService.findPost(usersId);
+            //プロフィール画面に基づいたuserの投稿を新しい順番に取得
+	        List<Posts> postsList = postsService.findPost(usersId);
 
-	    Users user = usersService.search(usersId);
+            //プロフィール画面に基づいたuserの情報を取得
+  	        Users user = usersService.search(usersId);
 
-	    Long loginUser = getUsersId();
+            //ログインしているユーザーの情報を取得
+	        Long loginUser = getUsersId();
 
-	    model.addAttribute("postsList", postsList);
-	    model.addAttribute("user", user);
-	    model.addAttribute("usersId", loginUser);
+	        model.addAttribute("postsList", postsList);
+	        model.addAttribute("user", user);
+	        model.addAttribute("usersId", loginUser);
 
-	    return "profile/index";
-    }
+	        return "profile/index";
+      }
 
-  @PostMapping("/edit")
-    public String edit(@Validated @ModelAttribute RequestProfile requestProfile,
-	  @RequestParam("profileFile")MultipartFile profileFile,
-	  BindingResult result,
-	  RedirectAttributes redirectAttributes) {
+    @PostMapping("/edit")
+        public String edit(@Validated @ModelAttribute RequestProfile requestProfile,
+	        @RequestParam("profileFile")MultipartFile profileFile,
+	        BindingResult result,
+	        RedirectAttributes redirectAttributes) {
 	
-	  log.info("プロフィール編集処理のアクションが呼ばれました。");
+	        log.info("プロフィール編集処理のアクションが呼ばれました。");
 
-	  if(result.hasErrors()) {
-		log.warn("バリデーションエラーが発生しました。:requestProfile={}, result={}",requestProfile, result);
+	        if(result.hasErrors()) {
+		        log.warn("バリデーションエラーが発生しました。:requestProfile={}, result={}",requestProfile, result);
 
-		redirectAttributes.addFlashAttribute("validationErrors",result);
-		redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
+  		        redirectAttributes.addFlashAttribute("validationErrors",result);
+		        redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
 		
-		return "redirect:/profile";
-	  }
-	
-	  if(!profilesService.isImageFile(profileFile)) {
-		log.warn("指定されたファイルは、画像ファイルではありません。:requestProfile={}",requestProfile);
+	     	    return "redirect:/profile";
+	      }
 
-		result.rejectValue("profileFileHidden",StringUtil.BLANK,"画像ファイルを指定してください。");
+	      //アップロードしたファイルが画像ファイルか確認
+	      if(!storagesService.isImageFile(profileFile)) {
+		      log.warn("指定されたファイルは、画像ファイルではありません。:requestProfile={}",requestProfile);
 
-		redirectAttributes.addFlashAttribute("validationErrors",result);
-		redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
+     	      result.rejectValue("profileFileHidden",StringUtil.BLANK,"画像ファイルを指定してください。");
 
-		return "redirect:/profile";
-	  }
+		      redirectAttributes.addFlashAttribute("validationErrors",result);
+		      redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
 
-	  Users users = getUsers();
+		      return "redirect:/profile";
+		  }
 
-	  String fileUri = profilesService.store(profileFile);
+          //ログインしているユーザーの情報を取得
+	      Users users = getUsers();
 
-	  users.setName(requestProfile.getName());
-	  users.setProfile(requestProfile.getProfile());
-	  users.setEmail(requestProfile.getEmail());
-  	  users.setIconUri(fileUri);
-	  usersService.save(users);
+          //ファイルの保存操作
+	      String fileUri = storagesService.store(profileFile);
 
-	  return "redirect:/home";
-  }
+	      //プロフィール更新操作
+	      users.setName(requestProfile.getName());
+		  users.setProfile(requestProfile.getProfile());
+		  users.setEmail(requestProfile.getEmail());
+	  	  users.setIconUri(fileUri);
+	      usersService.save(users);
 
-  @PostMapping("/editpassword")
+	      return "redirect:/home";
+	 }
+
+    @PostMapping("/editpassword")
     public String editpassword(@Validated @ModelAttribute RequestPassword requestpassword,Model model,
-		  BindingResult result,
-		  RedirectAttributes redirectAttributes) {
-	  Users user = getUsers();
-	  Long usersid = user.getId();
-	  if(!(user.getPassword().equals(requestpassword.getPassword()))) {
-		model.addAttribute("usersid", usersid);
+		BindingResult result,
+		RedirectAttributes redirectAttributes) {
+	    
+    	Users user = getUsers();
+	    Long usersid = user.getId();
 
-		redirectAttributes.addFlashAttribute("validationErrors", result);
-        redirectAttributes.addFlashAttribute("requestProfile", requestpassword);
+	    //パスワード変更
+	    if(!(user.getPassword().equals(requestpassword.getPassword()))) {
+		    model.addAttribute("usersid", usersid);
 
-		return "redirect:/profile/" + usersid;
-	  }else if(!(requestpassword.getNewpassword().equals(requestpassword.getRenewpassword()))) {
-		model.addAttribute("usersid", usersid);
-		return "redirect:/profile/" + usersid;
-	  }else {
-	  user.setPassword(requestpassword.getNewpassword());
-	  usersService.save(user);
+		    redirectAttributes.addFlashAttribute("validationErrors", result);
+            redirectAttributes.addFlashAttribute("requestProfile", requestpassword);
 
-	  return "redirect:/home";
-	}
-  }
+		    return "redirect:/profile/" + usersid;
+	    }else if(!(requestpassword.getNewpassword().equals(requestpassword.getRenewpassword()))) {
+		    model.addAttribute("usersid", usersid);
+		    return "redirect:/profile/" + usersid;
+	    }else {
+	        user.setPassword(requestpassword.getNewpassword());
+	        usersService.save(user);
+
+	        return "redirect:/home";
+	    }
+    }
 }

@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+//投稿画像Entityクラス。
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity

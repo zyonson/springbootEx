@@ -36,6 +36,8 @@ public class PostCommentController extends AppController{
 		    return "redirect:/home";
 		}
 		Long usersId = getUsersId();
+
+		//コメントを登録
 		postcommentsService.save(requestPostComment,usersId);
 		return "redirect:/home";
 	}
@@ -46,6 +48,7 @@ public class PostCommentController extends AppController{
 
 		Long usersId = getUsersId();
 
+		//ログインしているユーザーの指定したコメントを削除
 		postcommentsService.delete(postcommentId, usersId);
 
 		return "redirect:/home";

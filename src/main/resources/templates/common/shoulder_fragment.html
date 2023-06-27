@@ -154,6 +154,7 @@
   </main><!-- End #main -->
   <!-- ======= /ショルダー（ヘッダー、フッター）デザイン確認用のサンプルボディ ======= -->
  
+ <!-- 投稿、コメント機能のview フラグメント::Comment -->
  <div th:fragment="comment" class="col-lg-8">
    <div class="row">
 
@@ -217,7 +218,9 @@
              <div th:each="postcomment : ${post.postCommentsList}">
 		       <div class="post-item clearfix">
 		         <img th:src="${postcomment.users.iconUri}" alt="user-icon">
-		     	 <h4><th th:text="${postcomment.users.name}"></th></h4>
+		         <a th:href="@{/profile/{usersid} (usersid=${postcomment.users.id})}" >
+		     	   <h4><th th:text="${postcomment.users.name}"></th></h4>
+		     	 </a>
 				 <p th:text="${postcomment.comment}"></p>
 			   </div>
 			   <div class="card-footer" th:if="${users.id == postcomment.users.id}">
@@ -235,6 +238,7 @@
      </div>
    </div>
  </div><!-- End Left side columns -->
+<!-- ======= フラグメント::Comment ======= -->
 
   <!-- ======= フラグメント::Footer ======= -->
   <div th:fragment="footer">

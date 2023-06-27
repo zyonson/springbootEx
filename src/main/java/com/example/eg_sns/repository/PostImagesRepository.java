@@ -8,6 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.example.eg_sns.entity.PostImages;
 
+//投稿画像関連リポジトリインターフェース。
 public interface PostImagesRepository extends PagingAndSortingRepository<PostImages, Long>,CrudRepository<PostImages, Long>{
 	
 	List<PostImages> findByUsersIdOrderById(Long usersId);

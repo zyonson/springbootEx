@@ -31,6 +31,7 @@ public class HomeController  extends AppController{
 	public String home(Model model, @ModelAttribute("isSuccess") String isSuccess) {
 		log.info("ホーム画面のアクションが呼ばれました。");
 
+		// 全ての投稿を習得
 	    List<Posts> postsList = postsService.findAllPosts();
 
 		Long usersId = getUsersId();

@@ -8,6 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.example.eg_sns.entity.Posts;
 
+//投稿関連リポジトリインターフェース。
 public interface PostsRepository extends PagingAndSortingRepository<Posts, Long>, CrudRepository<Posts, Long>{
 
 	Optional<Posts> findById(Long usersid);

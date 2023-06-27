@@ -14,6 +14,7 @@ import com.example.eg_sns.util.CollectionUtil;
 
 import lombok.extern.log4j.Log4j2;
 
+//投稿関連サービスクラス。
 @Log4j2
 @Service
 public class PostsService {
@@ -27,20 +28,11 @@ public class PostsService {
 	public List<Posts> findAllPosts(){
 		return (List<Posts>) repository.findByOrderByIdDesc();
 	}
-	
+
 	public List<Posts> findPost(Long usersId){
 		return (List<Posts>) repository.findByUsersIdOrderByIdDesc(usersId);
 	}
-
-//	public Posts findPost(Long id) {
-//		log.info("トピックを検索します。:id={}", id);
-
-//		Posts posts = repository.findById(id).orElse(null);
-//		log.info("ユーザー検索結果。:id={}, posts={}", id, posts);
-
-//		return posts;
-//}
-
+    //投稿登録処理
 	public Posts save(RequestPost requestPost, Long usersId) {
 		Posts posts = new Posts();
 		posts.setUsersId(usersId);
@@ -48,20 +40,21 @@ public class PostsService {
 		posts.setBody(requestPost.getBody());
 		return repository.save(posts);
 	}
-
+    //投稿削除処理
 	public void delete(Long postsId, Long usersId) {
 		log.info("トピックを削除します。:postsId={}, usersId={}", postsId, usersId);
-
+        //削除したい投稿を取得
 		Posts posts = repository.findByIdAndUsersId(postsId, usersId).orElse(null);
 		if(posts == null) {
 			throw new AppNotFoundException();
 		}
-
+        //削除したい投稿に紐付いたコメントを全て取得
 		List<PostComments> postCommentsList = posts.getPostCommentsList();
+		//コメントがあれば削除
 		if (CollectionUtil.isNotEmpty(postCommentsList)) {
 			postCommentsService.delete(postCommentsList);
 		}
-
+        //投稿を削除
 		repository.delete(posts);
 	}
 }

@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
 
+//プロフィール関連サービスクラス。
 @Log4j2
 @Service
-public class ProfilesService {
+public class StoragesService {
+	//アップロードされた画像の登録処理を行う。
 	public String store(MultipartFile multipartFile) {
 
 		String fileName = multipartFile.getOriginalFilename();
@@ -53,6 +55,7 @@ public class ProfilesService {
 		return "/assets/profileimg/" + fileName;
 	}
 
+	//アップロードされた画像が画像ファイルか確認する処理
 	public static boolean isImageFile(MultipartFile multipartFile) {
 
 		String fileName = multipartFile.getOriginalFilename();
@@ -68,7 +71,7 @@ public class ProfilesService {
 			fos = new FileOutputStream(file);
 			fos.write(multipartFile.getBytes());
 			fos.close();
-			
+
 			if(file != null && file.isFile()) {
 				BufferedImage bi = ImageIO.read(file);
 				if (bi != null) {

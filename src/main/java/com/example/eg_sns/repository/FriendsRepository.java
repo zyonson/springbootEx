@@ -7,6 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.example.eg_sns.entity.Friends;
 
+//フレンド関連リポジトリインターフェース。
 public interface FriendsRepository extends PagingAndSortingRepository<Friends, Long>, CrudRepository<Friends, Long> {
 
 	List<Friends> findByUsersIdAndApprovalStatusIn(Long usersId, List<Long> approvalStatusList);

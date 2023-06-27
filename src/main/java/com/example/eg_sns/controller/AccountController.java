@@ -35,8 +35,8 @@ public class AccountController {
 
 	@PostMapping("/regist")
 	public String regist(@Validated @ModelAttribute RequestAccount requestAccount,
-			BindingResult result,
-			RedirectAttributes redirectAttributes) {
+		BindingResult result,
+		RedirectAttributes redirectAttributes) {
 
 		log.info("アカウント作成処理のアクションが呼ばれました。：requestAccount={}", requestAccount);
 

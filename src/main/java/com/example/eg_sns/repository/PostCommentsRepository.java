@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.eg_sns.entity.PostComments;
 
+//コメント関連リポジトリインターフェース。
 public interface PostCommentsRepository extends PagingAndSortingRepository<PostComments, Long>, CrudRepository<PostComments, Long> {
 
 	List<PostComments> findByPostsIdOrderById(Long postsId);

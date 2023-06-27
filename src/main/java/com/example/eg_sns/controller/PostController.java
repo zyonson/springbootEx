@@ -17,6 +17,7 @@ import com.example.eg_sns.dto.RequestPost;
 import com.example.eg_sns.entity.Posts;
 import com.example.eg_sns.service.PostImagesService;
 import com.example.eg_sns.service.PostsService;
+import com.example.eg_sns.service.StoragesService;
 import com.example.eg_sns.util.StringUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -31,13 +32,16 @@ public class PostController extends AppController {
 	
 	@Autowired
 	private PostImagesService postImagesService;
+	
+	@Autowired
+	private StoragesService storagesService;
 
 	@PostMapping("regist")
 	public String regist(@Validated @ModelAttribute RequestPost requestPost,
 			@RequestParam("profileFile") MultipartFile profileFile,
 			BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		log.info("トピック作成処理のアクションが呼ばれました :requestPost={}", requestPost);
+	    log.info("トピック作成処理のアクションが呼ばれました :requestPost={}", requestPost);
 
 		if (result.hasErrors()) {
 			log.warn("バリデーションエラーが発生しました。:requestPost={}, result={}", requestPost, result);
@@ -48,7 +52,8 @@ public class PostController extends AppController {
 			return "redirect:/home";
 		}
 
-		if (!PostImagesService.isImageFile(profileFile)) {
+		//アップロードしたファイルが画像ファイル出ない場合、エラーメッセージを格納してhome画面へ
+		if (!storagesService.isImageFile(profileFile)) {
 			log.warn("指定されたファイルは、画像ファイルではありません。:profileFile={}", profileFile);
 
 		    result.rejectValue("profileFile", StringUtil.BLANK, "画像ファイルを指定してください。");
@@ -61,12 +66,13 @@ public class PostController extends AppController {
 
 		Long usersId = getUsersId();
 
-		String fileUri = postImagesService.store(profileFile);
+		String fileUri = storagesService.store(profileFile);
 
 		Posts posts = postsService.save(requestPost, usersId);
 		
 		Long postsId = posts.getId();
-		
+
+		//投稿画像を保存
 		postImagesService.save(fileUri,usersId,postsId);
  
 		redirectAttributes.addFlashAttribute("isSuccess", "true");
@@ -80,6 +86,7 @@ public class PostController extends AppController {
 
 		Long usersId = getUsersId();
 
+		//ログインしているユーザーの投稿を削除
 		postsService.delete(postsId, usersId);
 
 		return "redirect:/home";

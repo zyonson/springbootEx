@@ -41,6 +41,8 @@ public class LoginController {
 		}
 
 		Users users = (Users) session.getAttribute(AppConst.SESSION_KEY_LOGIN_INFO);
+
+		// すでにログインしているのであればhome画面に遷移
 		if(users != null) {
 			return "redirect:/home";
 		}

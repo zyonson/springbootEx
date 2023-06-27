@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+//コメントEntityクラス。
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
