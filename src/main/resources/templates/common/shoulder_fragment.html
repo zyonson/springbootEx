@@ -168,17 +168,20 @@
 
      <!-- Card with an image on top -->
      <div th:each="post : ${postsList}">
-              
+
        <div class="card">
+
 	     <div th:each="postimage : ${post.postImagesList}">
 		   <img th:src="${postimage.imageUri}" class="card-img-top" alt="...">
          </div>
-                
+
          <div class="card-body">
+
            <h5 class="card-title"><td th:text="${post.title}"></td></h5>
            <p class="card-text">
              <td th:text="${post.body}"></td>
            </p>
+
            <div class="card-footer" th:if="${users.id == post.users.id}">
              <div class="row mb-3">
                <div class="col-sm-4">

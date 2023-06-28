@@ -40,62 +40,58 @@
                   </tr>
 
                 </thead>
-                <table>
-                  <tbody>
+                <tbody>
 
-                    <tr th:each="friend : ${friendsList}">
-					  <th scope="row"><img th:src="${friend.users.iconUri}" alt="usericon" style="width: 80px;"></th>
+                  <tr th:each="friend : ${friendsList}">
+				    <th scope="row"><img th:src="${friend.users.iconUri}" alt="usericon" style="width: 80px;"></th>
  
-		              <th>
-						<a th:href="@{/profile/{usersid} (usersid=${friend.friendUsersId})}" th:text="${friend.users.name}"></a> </a>
-                      </th>
+		            <th>
+					  <a th:href="@{/profile/{usersid} (usersid=${friend.friendUsersId})}" th:text="${friend.users.name}"></a> </a>
+                    </th>
 
-                      <th th:text="${friend.users.profile}"></th>
+                    <th th:text="${friend.users.profile}"></th>
 
-                      <th th:if="${friend.approvalStatus} == 1">
-						<button type="button" class="btn btn-primary rounded-pill">未承認</button>
-						<a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">キャンセル</a>
-                      </th>
+                    <th th:if="${friend.approvalStatus} == 1">
+					  <button type="button" class="btn btn-primary rounded-pill">未承認</button>
+					  <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">キャンセル</a>
+                    </th>
 
-                      <th th:if="${friend.approvalStatus} == 3">
-                        <button type="button" class="btn btn-primary rounded-pill">承認済み</button>
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
+                    <th th:if="${friend.approvalStatus} == 3">
+                      <button type="button" class="btn btn-primary rounded-pill">承認済み</button>
+                    </th>
+                  </tr>
+                </tbody>
 
-                <table>
-                  <tbody>
-                    <tr th:each="friend : ${friendsList2}">
+                <tbody>
+                  <tr th:each="friend : ${friendsList2}">
 
-					  <th scope="row"><img th:src="${friend.users.iconUri}" alt="usericon" style="width: 80px;"></th>
+					<th scope="row"><img th:src="${friend.users.iconUri}" alt="usericon" style="width: 80px;"></th>
 
-		              <th>
-						<a th:href="@{/profile/{usersid} (usersid=${friend.friendUsersId})}" th:text="${friend.users.name}"></a>
-                      </th>
+		            <th>
+				      <a th:href="@{/profile/{usersid} (usersid=${friend.friendUsersId})}" th:text="${friend.users.name}"></a>
+                    </th>
 
-                      <th th:text="${friend.users.profile}"></th>
+                    <th th:text="${friend.users.profile}"></th>
 
-                      <th th:if="${friend.approvalStatus} == 2">
+                    <th th:if="${friend.approvalStatus} == 2">
 
-					    <form  method="post" th:action="@{/friend/update}" th:object="${requestFriend}" >
-						  <input type="hidden" name="usersId" th:value="${friend.usersId}">
-						  <input type="hidden" name="friendUsersId" th:value="${friend.friendUsersId}">
-						  <button type="submit" class="btn btn-primary rounded-pill submit">承認待ち</button>
-						</form>
+					  <form  method="post" th:action="@{/friend/update}" th:object="${requestFriend}" >
+						<input type="hidden" name="usersId" th:value="${friend.usersId}">
+						<input type="hidden" name="friendUsersId" th:value="${friend.friendUsersId}">
+						<button type="submit" class="btn btn-primary rounded-pill submit">承認待ち</button>
+					  </form>
 
-						<a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">却下</a>
+					  <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">却下</a>
 
-                      </th>
+                    </th>
 
-                      <th th:if="${friend.approvalStatus} == 4">
-                        <button type="button" class="btn btn-primary rounded-pill">承諾</button>   
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
+                    <th th:if="${friend.approvalStatus} == 4">
+                      <button type="button" class="btn btn-primary rounded-pill">承諾</button>   
+                    </th>
+                  </tr>
+                </tbody>
               <!-- End Table with stripped rows -->
-
+              </table>
             </div>
           </div>
         </div><!-- End Right side columns -->

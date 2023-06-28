@@ -24,6 +24,14 @@ public class PostCommentController extends AppController{
 	@Autowired
 	private PostCommentsService postcommentsService;
 
+	/**
+	 * [POST]コメント作成アクション。
+	 *
+	 * @param RequestPostComment 入力フォームの内容
+	 * @param result バリデーション結果
+	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
+	 * @return ホーム画面を表示
+	 */
 	@PostMapping("/create")
 	public String create(@Validated @ModelAttribute RequestPostComment requestPostComment,
 			BindingResult result,
@@ -42,6 +50,12 @@ public class PostCommentController extends AppController{
 		return "redirect:/home";
 	}
 
+	/**
+	 * [GET]コメント削除アクション
+	 *
+	 * @param postcommentId コメントID
+	 * @return ホーム画面を表示
+	 */
 	@GetMapping("/delete/{postcommentId}")
 	public String delete(@PathVariable Long postcommentId) {
 		log.info("トピック削除処理のアクションが呼ばれました。 :postcommentId={}", postcommentId);

@@ -23,6 +23,13 @@ public class HomeController  extends AppController{
 	@Autowired
 	private PostsService postsService;
 
+	/**
+	 * [GET]ホーム画面のアクション。
+	 *
+	 * @param model ページに表示されるユーザー情報や投稿内容のオブジェクト
+	 * @param isSuccess フラッシュメッセージ
+	 * @return　ホーム画面を表示
+	 */
 	@GetMapping(path = {"", "/"})
 	public String home(Model model, @ModelAttribute("isSuccess") String isSuccess) {
 		log.info("ホーム画面のアクションが呼ばれました。");

@@ -41,19 +41,24 @@ public class ProfileController extends AppController{
 	@Autowired
 	private StoragesService storagesService;
 
+	/**
+	 * [GET]プロフィール画面のアクション。
+	 *
+	 * @param model プロフィール画面のユーザーデータ、ユーザーに基づく投稿やコメントのオブジェクト
+	 * @param usersId　ユーザーID
+	 * @return プロフィール画面を表示
+	 */
     @GetMapping("{usersid}")
         public String profile(Model model, @PathVariable("usersid") Long usersId){
-    	
- 
 
             //プロフィール画面に基づいたuserの情報を取得
   	        Users user = usersService.search(usersId);
-  	        
+
   	  	if (user == null) {
             // プロフィールが見つからない場合はホームページにリダイレクト
             return "error/404";
         }
-  	  	
+
         //プロフィール画面に基づいたuserの投稿を新しい順番に取得
 	        List<Posts> postsList = postsService.findPost(usersId);
 
@@ -66,8 +71,16 @@ public class ProfileController extends AppController{
 
 	        return "profile/index";
       }
-    
 
+    /**
+	 * [POST]アカウント編集アクション。
+	 *
+	 * @param RequestProfile 入力フォームの内容
+	 * @param profileFile プロフィール画像ファイル
+	 * @param result バリデーション結果
+	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
+	 * @return ホーム画面を表示
+	 */
     @PostMapping("/edit")
         public String edit(@Validated @ModelAttribute RequestProfile requestProfile,
 	        @RequestParam("profileFile")MultipartFile profileFile,
@@ -113,11 +126,20 @@ public class ProfileController extends AppController{
 	      return "redirect:/home";
 	 }
 
+    /**
+	 * [POST]アカウントパスワード変更アクション。
+	 *
+	 * @param RequestPassword 入力フォームの内容
+	 * @param model usersIdを格納
+	 * @param result バリデーション結果
+	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
+	 * @return ホーム画面を表示
+	 */
     @PostMapping("/editpassword")
     public String editpassword(@Validated @ModelAttribute RequestPassword requestpassword,Model model,
 		BindingResult result,
 		RedirectAttributes redirectAttributes) {
-	    
+
     	Users user = getUsers();
 	    Long usersid = user.getId();
 

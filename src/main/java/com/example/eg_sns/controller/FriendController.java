@@ -25,6 +25,12 @@ public class FriendController extends AppController{
 	@Autowired
 	private FriendsService friendsService;
 
+	/**
+	 * [GET]フレンド一覧画面のアクション。
+	 *
+	 * @param model ページに表示されるユーザー情報やフレンド一覧のオブジェクト
+	 * @return フレンド一覧画面を表示
+	 */
 	@GetMapping("/list")
 	public String list(Model model) {
 		Long usersId = getUsersId();
@@ -39,7 +45,12 @@ public class FriendController extends AppController{
 		return "/friend/list";
 	}
 
-    // friend申請機能
+	/**
+	 * [POST]friend申請アクション。
+	 *
+	 * @param requestFriend フレンド申請データ
+	 * @return　フレンド一覧画面を表示
+	 */
 	@PostMapping("/offer")
 	public String offer(RequestFriend requestFriend) {
 		Long usersId = getUsersId();
@@ -47,14 +58,24 @@ public class FriendController extends AppController{
 		return "redirect:/friend/list";
 	}
 
-	// friend申請承認機能
+	/**
+	 * [POST]friend申請承認アクション。
+	 *
+	 * @param requestFriend フレンド申請承認データ
+	 * @return　フレンド一覧画面を表示
+	 */
 	@PostMapping("/update")
 	public String update(RequestFriend requestFriend) {
 		friendsService.update(requestFriend);
 		return "redirect:/friend/list";
 	}
 
-	// friend申請取り消し、却下機能
+	/**
+	 * [GET]フレンド申請キャンセル、却下のアクション。
+	 *
+	 * @param friendUsersId　フレンドユーザーID
+	 * @return　フレンド一覧画面を表示
+	 */
 	@GetMapping("/delete/{friendUsersId}")
 	public String delete(@PathVariable("friendUsersId") Long friendUsersId){
 		Long usersId = getUsersId();

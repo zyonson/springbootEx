@@ -65,7 +65,7 @@ public class FriendsService {
 
 		return null;
 	}
-	
+
 	public Friends delete(Long friendUsersId, Long usersId) {
 		Friends friend = repository.findByUsersIdAndFriendUsersId(usersId, friendUsersId);
 		Friends friends = repository.findByUsersIdAndFriendUsersId(friendUsersId, usersId) ;

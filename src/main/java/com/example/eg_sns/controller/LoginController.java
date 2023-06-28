@@ -31,6 +31,12 @@ public class LoginController {
 	@Autowired
 	private UsersService usersService;
 
+	/**
+	 * [GET]ログインアクション
+	 *
+	 * @param model 
+	 * @return　ログインしている場合はホーム画面、ログインしてない場合はログイン画面を表示
+	 */
 	@GetMapping("/login")
 	public String login(Model model) {
 
@@ -49,6 +55,12 @@ public class LoginController {
 		return "login/index";
 	}
 
+	/**
+	 * [POST]ログインアクション。
+	 *
+	 * @param RequestLogin 入力フォームの内容
+	 * @return　ログイン成功時ホーム画面を表示
+	 */
 	@PostMapping("/login")
 	public String login(@Validated @ModelAttribute RequestLogin requestLogin,
 		BindingResult result,
@@ -96,6 +108,11 @@ public class LoginController {
 		return "redirect:/home";
 	}
 
+	/**
+	 * [GET]ログアウトアクション
+	 * 
+	 * @return　ログイン画面を表示
+	 */
 	@GetMapping("logout")
 	public String logout() {
 		session.removeAttribute(AppConst.SESSION_KEY_LOGIN_INFO);

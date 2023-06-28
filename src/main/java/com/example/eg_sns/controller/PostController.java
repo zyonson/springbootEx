@@ -29,13 +29,22 @@ public class PostController extends AppController {
 
 	@Autowired
 	private PostsService postsService;
-	
+
 	@Autowired
 	private PostImagesService postImagesService;
-	
+
 	@Autowired
 	private StoragesService storagesService;
 
+	/**
+	 * [POST]投稿作成アクション。
+	 *
+	 * @param RequestPassword 入力フォームの内容
+	 * @param model usersIdを格納
+	 * @param result バリデーション結果
+	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
+	 * @return ホーム画面を表示
+	 */
 	@PostMapping("regist")
 	public String regist(@Validated @ModelAttribute RequestPost requestPost,
 			@RequestParam("profileFile") MultipartFile profileFile,
@@ -80,6 +89,12 @@ public class PostController extends AppController {
 		return "redirect:/home";
 	}
 
+	/**
+	 * [GET]投稿削除アクション
+	 *
+	 * @param postsId 投稿ID
+	 * @return ホーム画面を表示
+	 */
 	@GetMapping("/delete/{postsId}")
 	public String delete(@PathVariable Long postsId) {
 		log.info("トピック削除処理のアクションが呼ばれました。 :postsId={}", postsId);
