@@ -27,12 +27,14 @@ public class FriendsService {
         if (repository.findByUsersIdAndFriendUsersId(users, requestFriend.getFriendUsersId()) != null) {
         	return null;
         }else {
+
         //申請中のレコード作成
 		Friends sendRequest = new Friends();
 		sendRequest.setUsersId(users);
 		sendRequest.setFriendUsersId(requestFriend.getFriendUsersId());
 		sendRequest.setApprovalStatus(1L);
 		repository.save(sendRequest);
+
         //承認待ちのレコード作成
 		Friends receiverRequest = new Friends();
 		receiverRequest.setUsersId(requestFriend.getFriendUsersId());
@@ -48,11 +50,13 @@ public class FriendsService {
 	public Friends update(RequestFriend requestFriend) {
 		Friends friend = repository.findByUsersIdAndFriendUsersId(requestFriend.getUsersId(), requestFriend.getFriendUsersId());
         Friends friends = repository.findByUsersIdAndFriendUsersId(requestFriend.getFriendUsersId(), requestFriend.getUsersId());
+
         //ステータスを承諾に変更
         friend.setUsersId(requestFriend.getUsersId());
 		friend.setFriendUsersId(requestFriend.getFriendUsersId());
 		friend.setApprovalStatus(4L);
 		repository.save(friend);
+
         //ステータスを承認に変更
 		friends.setUsersId(requestFriend.getFriendUsersId());
 		friends.setFriendUsersId(requestFriend.getUsersId());

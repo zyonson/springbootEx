@@ -24,15 +24,19 @@ public class PostComments extends EntityBase{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	/** ユーザーID */
     @Column(name = "users_id", nullable = false)
     private Long usersId;
 
+    /** 投稿ID */
     @Column(name = "posts_id", nullable = false)
     private Long postsId;
 
+    /** コメント */
     @Column(name = "comment")
     private String comment;
 
+    /** ユーザー情報とのJOIN */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Users users;

@@ -32,6 +32,7 @@ public class PostsService {
 	public List<Posts> findPost(Long usersId){
 		return (List<Posts>) repository.findByUsersIdOrderByIdDesc(usersId);
 	}
+
     //投稿登録処理
 	public Posts save(RequestPost requestPost, Long usersId) {
 		Posts posts = new Posts();
@@ -40,20 +41,25 @@ public class PostsService {
 		posts.setBody(requestPost.getBody());
 		return repository.save(posts);
 	}
+
     //投稿削除処理
 	public void delete(Long postsId, Long usersId) {
 		log.info("トピックを削除します。:postsId={}, usersId={}", postsId, usersId);
+
         //削除したい投稿を取得
 		Posts posts = repository.findByIdAndUsersId(postsId, usersId).orElse(null);
 		if(posts == null) {
 			throw new AppNotFoundException();
 		}
+
         //削除したい投稿に紐付いたコメントを全て取得
 		List<PostComments> postCommentsList = posts.getPostCommentsList();
+
 		//コメントがあれば削除
 		if (CollectionUtil.isNotEmpty(postCommentsList)) {
 			postCommentsService.delete(postCommentsList);
 		}
+
         //投稿を削除
 		repository.delete(posts);
 	}

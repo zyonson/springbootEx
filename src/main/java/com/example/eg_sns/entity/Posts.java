@@ -27,23 +27,29 @@ public class Posts extends EntityBase {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/** ユーザーID */
 	@Column(name = "users_id", nullable = false)
 	private Long usersId;
 
+	/** タイトル */
 	@Column(name = "title", nullable = false)
 	private String title;
 
+	/** 本文 */
 	@Column(name = "body", nullable = false)
 	private String body;
 
+	/** ユーザー情報とのJOIN */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "users_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Users users;
-	
+
+	/** コメント情報とのJOIN */
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "posts_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private List<PostImages> postImagesList;
-	
+
+	/** 投稿画像情報とのJOIN */
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "posts_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private List<PostComments> postCommentsList;

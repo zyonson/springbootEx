@@ -14,14 +14,17 @@ public class PostImagesService {
 
 	@Autowired
 	private PostImagesRepository repository;
+
     //新しい順に全ての投稿画像を取得
 	public List<PostImages> findAllPostImages(){
 		return (List<PostImages>) repository.findByOrderByIdDesc();
 	}
+
     //プロフィール画面に基づくユーザーの投稿画像を全て取得
 	public List<PostImages> findPostImage(Long usersId){
 		return (List<PostImages>) repository.findByUsersIdOrderById(usersId);
 	}
+
     //投稿画像保存処理
 	public PostImages save(String fileUri, Long usersId,Long postsId) {
 		PostImages postImages= new PostImages();

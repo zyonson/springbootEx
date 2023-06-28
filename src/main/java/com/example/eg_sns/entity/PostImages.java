@@ -24,19 +24,24 @@ public class PostImages extends EntityBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /** ユーザーID */
     @Column(name = "users_id", nullable = false)
     private Long usersId;
 
+    /** 投稿ID */
     @Column(name = "posts_id", nullable = false)
     private Long postsId;
 
+    /** 投稿画像 */
     @Column(name = "image_uri")
     private String imageUri;
 
+    /** ユーザー情報とのJOIN */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Users users;
 
+    /** 投稿情報とのJOIN */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "posts_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Posts posts;
