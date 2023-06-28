@@ -43,12 +43,19 @@ public class ProfileController extends AppController{
 
     @GetMapping("{usersid}")
         public String profile(Model model, @PathVariable("usersid") Long usersId){
-
-            //プロフィール画面に基づいたuserの投稿を新しい順番に取得
-	        List<Posts> postsList = postsService.findPost(usersId);
+    	
+ 
 
             //プロフィール画面に基づいたuserの情報を取得
   	        Users user = usersService.search(usersId);
+  	        
+  	  	if (user == null) {
+            // プロフィールが見つからない場合はホームページにリダイレクト
+            return "error/404";
+        }
+  	  	
+        //プロフィール画面に基づいたuserの投稿を新しい順番に取得
+	        List<Posts> postsList = postsService.findPost(usersId);
 
             //ログインしているユーザーの情報を取得
 	        Long loginUser = getUsersId();
@@ -59,6 +66,7 @@ public class ProfileController extends AppController{
 
 	        return "profile/index";
       }
+    
 
     @PostMapping("/edit")
         public String edit(@Validated @ModelAttribute RequestProfile requestProfile,
