@@ -34,6 +34,6 @@ public class Friends extends EntityBase {
 	private Long approvalStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "users_id", referencedColumnName = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "friend_users_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Users users;
 }

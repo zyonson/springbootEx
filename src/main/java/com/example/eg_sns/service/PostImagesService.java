@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.eg_sns.entity.PostImages;
 import com.example.eg_sns.repository.PostImagesRepository;
 
-import lombok.extern.log4j.Log4j2;
-
 //投稿画像関連サービスクラス。
-@Log4j2
 @Service
 public class PostImagesService {
 

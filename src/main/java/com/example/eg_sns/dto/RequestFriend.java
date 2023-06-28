@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class RequestFriend extends DtoBase{
 
+	private Long UsersId;
 	/** 申請した相手のユーザーId */
 	private Long friendUsersId;
 

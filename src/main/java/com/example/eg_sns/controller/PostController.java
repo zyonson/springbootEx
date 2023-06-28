@@ -48,7 +48,7 @@ public class PostController extends AppController {
 
 			redirectAttributes.addFlashAttribute("validationErrorsPost", result);
 			redirectAttributes.addFlashAttribute("requestPost", requestPost);
-			
+
 			return "redirect:/home";
 		}
 
@@ -69,12 +69,12 @@ public class PostController extends AppController {
 		String fileUri = storagesService.store(profileFile);
 
 		Posts posts = postsService.save(requestPost, usersId);
-		
+
 		Long postsId = posts.getId();
 
 		//投稿画像を保存
 		postImagesService.save(fileUri,usersId,postsId);
- 
+
 		redirectAttributes.addFlashAttribute("isSuccess", "true");
 
 		return "redirect:/home";

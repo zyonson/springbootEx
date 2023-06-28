@@ -20,7 +20,6 @@ import com.example.eg_sns.dto.RequestPassword;
 import com.example.eg_sns.dto.RequestProfile;
 import com.example.eg_sns.entity.Posts;
 import com.example.eg_sns.entity.Users;
-import com.example.eg_sns.service.PostImagesService;
 import com.example.eg_sns.service.PostsService;
 import com.example.eg_sns.service.StoragesService;
 import com.example.eg_sns.service.UsersService;
@@ -35,9 +34,6 @@ public class ProfileController extends AppController{
 
 	@Autowired
 	private PostsService postsService;
-
-	@Autowired
-	private PostImagesService postImagesService;
 
 	@Autowired
 	private UsersService usersService;
@@ -69,7 +65,7 @@ public class ProfileController extends AppController{
 	        @RequestParam("profileFile")MultipartFile profileFile,
 	        BindingResult result,
 	        RedirectAttributes redirectAttributes) {
-	
+
 	        log.info("プロフィール編集処理のアクションが呼ばれました。");
 
 	        if(result.hasErrors()) {
@@ -77,7 +73,7 @@ public class ProfileController extends AppController{
 
   		        redirectAttributes.addFlashAttribute("validationErrors",result);
 		        redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
-		
+
 	     	    return "redirect:/profile";
 	      }
 

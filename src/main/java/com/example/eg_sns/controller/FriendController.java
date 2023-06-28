@@ -14,12 +14,9 @@ import com.example.eg_sns.dto.RequestFriend;
 import com.example.eg_sns.entity.Friends;
 import com.example.eg_sns.service.FriendsService;
 
-import lombok.extern.log4j.Log4j2;
-
 /**
  * ※TODO 適宜実装を入れてください。
  */
-@Log4j2
 @Controller
 @RequestMapping("/friend")
 public class FriendController extends AppController{
@@ -33,10 +30,11 @@ public class FriendController extends AppController{
 
 		// 申請中、承認ステータスのfriendを習得
 		List<Friends> friendsList = friendsService.sendFriends(usersId, Arrays.asList(1L, 3L));
+		List<Friends> friendsList2 = friendsService.sendFriends(usersId, Arrays.asList(2L, 4L));
 		model.addAttribute("usersId", usersId);
 		model.addAttribute("friendsList", friendsList);
+		model.addAttribute("friendsList2", friendsList2);
 
-		log.info("friendsList: {}", friendsList);
 		return "/friend/list";
 	}
 
@@ -45,6 +43,12 @@ public class FriendController extends AppController{
 	public String offer(RequestFriend requestFriend) {
 		Long usersId = getUsersId();
 		friendsService.save(requestFriend,usersId);
+		return "redirect:/friend/list";
+	}
+
+	@PostMapping("/update")
+	public String update(RequestFriend requestFriend) {
+		friendsService.update(requestFriend);
 		return "redirect:/friend/list";
 	}
 }

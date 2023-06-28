@@ -9,10 +9,8 @@ import com.example.eg_sns.dto.RequestFriend;
 import com.example.eg_sns.entity.Friends;
 import com.example.eg_sns.repository.FriendsRepository;
 
-import lombok.extern.log4j.Log4j2;
-
 //フレンド関連サービスクラス。
-@Log4j2
+
 @Service
 public class FriendsService {
 
@@ -23,28 +21,44 @@ public class FriendsService {
 		return (List<Friends>) repository.findByUsersIdAndApprovalStatusIn(usersId, approvalStatusList);
 	}
 
-	public List<Friends> findFriends(Long friendUsersId){
-		return (List<Friends>) repository.findByFriendUsersIdOrderById(friendUsersId);
-	}
 	//フレンド申請処理
 	public Friends save(RequestFriend requestFriend, Long users) {
 		//すでに申請中、または申請されている場合やフレンド登録されている場合、申請処理中断
         if (repository.findByUsersIdAndFriendUsersId(users, requestFriend.getFriendUsersId()) != null) {
         	return null;
         }else {
-        //申請中のレコード
+        //申請中のレコード作成
 		Friends sendRequest = new Friends();
 		sendRequest.setUsersId(users);
 		sendRequest.setFriendUsersId(requestFriend.getFriendUsersId());
 		sendRequest.setApprovalStatus(1L);
 		repository.save(sendRequest);
-        //承認待ちのレコード
+        //承認待ちのレコード作成
 		Friends receiverRequest = new Friends();
 		receiverRequest.setUsersId(requestFriend.getFriendUsersId());
 		receiverRequest.setFriendUsersId(users);
 		receiverRequest.setApprovalStatus(2L);
 		repository.save(receiverRequest);
+
 		return null;
         }
+	}
+
+	//friend承認
+	public Friends update(RequestFriend requestFriend) {
+		Friends friend = repository.findByUsersIdAndFriendUsersId(requestFriend.getUsersId(), requestFriend.getFriendUsersId());
+        Friends friends = repository.findByUsersIdAndFriendUsersId(requestFriend.getFriendUsersId(), requestFriend.getUsersId());
+        //ステータスを承諾に変更
+        friend.setUsersId(requestFriend.getUsersId());
+		friend.setFriendUsersId(requestFriend.getFriendUsersId());
+		friend.setApprovalStatus(4L);
+		repository.save(friend);
+        //ステータスを承認に変更
+		friends.setUsersId(requestFriend.getFriendUsersId());
+		friends.setFriendUsersId(requestFriend.getUsersId());
+		friends.setApprovalStatus(3L);
+		repository.save(friends);
+
+		return null;
 	}
 }
