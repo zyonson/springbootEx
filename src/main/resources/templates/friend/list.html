@@ -54,7 +54,7 @@
 
                       <th th:if="${friend.approvalStatus} == 1">
 						<button type="button" class="btn btn-primary rounded-pill">未承認</button>
-						<button type="button" class="btn btn-danger rounded-pill">キャンセル</button>
+						<a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">キャンセル</a>
                       </th>
 
                       <th th:if="${friend.approvalStatus} == 3">
@@ -84,7 +84,7 @@
 						  <button type="submit" class="btn btn-primary rounded-pill submit">承認待ち</button>
 						</form>
 
-						<button type="button" class="btn btn-danger rounded-pill">却下</button>
+						<a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">却下</a>
 
                       </th>
 
