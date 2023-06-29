@@ -21,7 +21,13 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Service
 public class StoragesService {
-	//アップロードされた画像の登録処理を行う。
+
+	/**
+	 * ファイルアップロード処理。
+	 *
+	 * @param multipartFile マルチパートで受信したファイル。
+	 * @return ファイルアップロード先の、Webサイトで見たときのドキュメントルートからの相対パスが返却される。
+	 */
 	public String store(MultipartFile multipartFile) {
 
 		String fileName = multipartFile.getOriginalFilename();
@@ -55,7 +61,13 @@ public class StoragesService {
 		return "/assets/profileimg/" + fileName;
 	}
 
-	//アップロードされた画像が画像ファイルか確認する処理
+	/**
+	 * ファイルチェック処理。
+	 * 画像ファイルであるか、否かのチェックを行う。
+	 *
+	 * @param multipartFile マルチパートで受信したファイル。
+	 * @return true.画像ファイルである。false.画像ファイルではない。（または、処理中にエラーが発生した場合。）
+	 */
 	public static boolean isImageFile(MultipartFile multipartFile) {
 
 		String fileName = multipartFile.getOriginalFilename();

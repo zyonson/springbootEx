@@ -15,12 +15,20 @@ public class PostImagesService {
 	@Autowired
 	private PostImagesRepository repository;
 
-    //新しい順に全ての投稿画像を取得
+	/**
+	 * 全ての投稿画像を取得。
+	 *
+	 * @return 全ての投稿画像を降順に取得
+	 */
 	public List<PostImages> findAllPostImages(){
 		return (List<PostImages>) repository.findByOrderByIdDesc();
 	}
 
-    //プロフィール画面に基づくユーザーの投稿画像を全て取得
+	/**
+	 * プロフィール画面に基づく投稿画像を取得。
+	 *
+	 * @return プロフィール画面に基づく投稿画像を取得
+	 */
 	public List<PostImages> findPostImage(Long usersId){
 		return (List<PostImages>) repository.findByUsersIdOrderById(usersId);
 	}

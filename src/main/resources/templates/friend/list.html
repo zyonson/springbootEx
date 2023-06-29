@@ -51,14 +51,19 @@
 
                     <th th:text="${friend.users.profile}"></th>
 
-                    <th th:if="${friend.approvalStatus} == 1">
-					  <button type="button" class="btn btn-primary rounded-pill">未承認</button>
-					  <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">キャンセル</a>
-                    </th>
+                    <th:block th:switch="${friend.approvalStatus}">
 
-                    <th th:if="${friend.approvalStatus} == 3">
-                      <button type="button" class="btn btn-primary rounded-pill">承認済み</button>
-                    </th>
+                      <th th:case=1>
+					    <button type="button" class="btn btn-primary rounded-pill">未承認</button>
+					    <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">キャンセル</a>
+                      </th>
+
+                      <th th:case=3>
+                        <button type="button" class="btn btn-primary rounded-pill">承認済み</button>
+
+                        <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">解除</a>
+                      </th>
+                    <th:block>
                   </tr>
                 </tbody>
 
@@ -73,21 +78,22 @@
 
                     <th th:text="${friend.users.profile}"></th>
 
-                    <th th:if="${friend.approvalStatus} == 2">
+                    <th:block th:switch="${friend.approvalStatus}">
 
-					  <form  method="post" th:action="@{/friend/update}" th:object="${requestFriend}" >
-						<input type="hidden" name="usersId" th:value="${friend.usersId}">
-						<input type="hidden" name="friendUsersId" th:value="${friend.friendUsersId}">
-						<button type="submit" class="btn btn-primary rounded-pill submit">承認待ち</button>
-					  </form>
+                      <th th:case=2>
 
-					  <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">却下</a>
+					    <a class="btn btn-primary rounded-pill" th:href="@{/friend/update/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">承認待ち</a>
 
-                    </th>
+					    <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">却下</a>
 
-                    <th th:if="${friend.approvalStatus} == 4">
-                      <button type="button" class="btn btn-primary rounded-pill">承諾</button>   
-                    </th>
+                      </th>
+
+                      <th th:case=4>
+                        <button type="button" class="btn btn-primary rounded-pill">承諾</button>
+
+                        <a class="btn btn-danger rounded-pill" th:href="@{/friend/delete/{friendUsersId} (friendUsersId=${friend.friendUsersId})}">解除</a>
+                      </th>
+                    </th:block>
                   </tr>
                 </tbody>
               <!-- End Table with stripped rows -->

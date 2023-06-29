@@ -46,26 +46,35 @@ public class FriendsService {
         }
 	}
 
-	//friend承認
-	public Friends update(RequestFriend requestFriend) {
-		Friends friend = repository.findByUsersIdAndFriendUsersId(requestFriend.getUsersId(), requestFriend.getFriendUsersId());
-        Friends friends = repository.findByUsersIdAndFriendUsersId(requestFriend.getFriendUsersId(), requestFriend.getUsersId());
+	/**friend承認
+	 * 
+	 * @param ユーザーID
+	 * @param フレンド申請された相手のユーザーID
+	 * */
+	public Friends update(Long usersId, Long friendUsersId) {
+		Friends friend = repository.findByUsersIdAndFriendUsersId(usersId, friendUsersId);
+        Friends friends = repository.findByUsersIdAndFriendUsersId(friendUsersId, usersId);
 
         //ステータスを承諾に変更
-        friend.setUsersId(requestFriend.getUsersId());
-		friend.setFriendUsersId(requestFriend.getFriendUsersId());
+        friend.setUsersId(usersId);
+		friend.setFriendUsersId(friendUsersId);
 		friend.setApprovalStatus(4L);
 		repository.save(friend);
 
         //ステータスを承認に変更
-		friends.setUsersId(requestFriend.getFriendUsersId());
-		friends.setFriendUsersId(requestFriend.getUsersId());
+		friends.setUsersId(friendUsersId);
+		friends.setFriendUsersId(usersId);
 		friends.setApprovalStatus(3L);
 		repository.save(friends);
 
 		return null;
 	}
 
+	/** 
+	 * 
+	 * @param フレンド申請された相手のユーザーID
+	 * @param ユーザーID
+	 * */
 	public Friends delete(Long friendUsersId, Long usersId) {
 		Friends friend = repository.findByUsersIdAndFriendUsersId(usersId, friendUsersId);
 		Friends friends = repository.findByUsersIdAndFriendUsersId(friendUsersId, usersId) ;

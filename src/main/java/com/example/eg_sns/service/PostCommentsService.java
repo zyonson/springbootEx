@@ -20,7 +20,12 @@ public class PostCommentsService {
 	@Autowired
 	private PostCommentsRepository repository;
 
-    //コメント登録処理
+    /**コメント登録処理
+     * 
+     * @param RequestPostComment コメントDTO
+     * @param usersId ユーザーID
+     * @return コメント登録処理
+     * */
 	public PostComments save(RequestPostComment requestPostComment, Long usersId) {
 		PostComments comment = new PostComments();
 		comment.setUsersId(usersId);
@@ -29,12 +34,12 @@ public class PostCommentsService {
 		return repository.save(comment);
 	}
 
-    //投稿に紐付いているコメントを全て削除する処理
+    /**投稿に紐付いているコメントを全て削除する処理*/
 	public void delete(List<PostComments> postCommentsList) {
 		repository.deleteAll(postCommentsList);
 	}
 
-    //ログインしているユーザ自身がしたコメントの場合指定したコメント削除処理
+    /**ログインしているユーザ自身がしたコメントの場合指定したコメント削除処理*/
 	public void delete(Long id, Long usersId) {
 		log.info("トピックを削除します。:id={}, usersId={}", id, usersId);
 

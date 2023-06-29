@@ -59,14 +59,15 @@ public class FriendController extends AppController{
 	}
 
 	/**
-	 * [POST]friend申請承認アクション。
+	 * [GET]friend申請承認アクション。
 	 *
-	 * @param requestFriend フレンド申請承認データ
+	 * @param friendUsersId　フレンド申請された相手のusersId
 	 * @return　フレンド一覧画面を表示
 	 */
-	@PostMapping("/update")
-	public String update(RequestFriend requestFriend) {
-		friendsService.update(requestFriend);
+	@GetMapping("/update/{friendUsersId}")
+	public String update(@PathVariable("friendUsersId") Long friendUsersId) {
+		Long usersId = getUsersId();
+		friendsService.update(usersId,friendUsersId);
 		return "redirect:/friend/list";
 	}
 
