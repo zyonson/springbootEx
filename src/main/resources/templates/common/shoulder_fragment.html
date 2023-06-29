@@ -60,23 +60,23 @@
           </a>
         </li><!-- End Search Icon-->
 
-        <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe-3" th:object="${users}">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">佐藤太郎</span>
+            <img th:src="*{iconUri}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="*{name}">
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>佐藤太郎</h6>
+              <h6 th:text="*{name}"></h6>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/profile/">
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/profile/{usersid}(usersid=${usersId})}">
                 <i class="bi bi-person"></i>
                 <span>プロフィールを見る</span>
               </a>
@@ -107,21 +107,21 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="/home/">
+        <a class="nav-link " th:href="@{/home}">
           <i class="bi bi-house-door"></i>
           <span>Home</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/profile/">
+        <a class="nav-link collapsed" th:href="@{/profile/{usersid}(usersid=${usersId})}">
           <i class="bi bi-person"></i>
           <span>プロフィール</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/friend/list">
+        <a class="nav-link collapsed" th:href="@{/friend/list}">
           <i class="bi bi-people"></i>
           <span>フレンド</span>
         </a>
@@ -153,12 +153,100 @@
     </section>
   </main><!-- End #main -->
   <!-- ======= /ショルダー（ヘッダー、フッター）デザイン確認用のサンプルボディ ======= -->
+ 
+ <!-- 投稿、コメント機能のview フラグメント::Comment -->
+ <div th:fragment="comment" class="col-lg-8">
+   <div class="row">
 
+     <div th:if="${isSuccess == true}" class="alert alert-success alert-dismissible fade show" role="alert">
+       <div>
+         <i class="bi bi-check-circle me-1"></i>
+         投稿しました。
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       </div>
+     </div>
+
+     <!-- Card with an image on top -->
+     <div th:each="post : ${postsList}">
+
+       <div class="card">
+
+	     <div th:each="postimage : ${post.postImagesList}">
+		   <img th:src="${postimage.imageUri}" class="card-img-top" alt="...">
+         </div>
+
+         <div class="card-body">
+
+           <h5 class="card-title"><td th:text="${post.title}"></td></h5>
+           <p class="card-text">
+             <td th:text="${post.body}"></td>
+           </p>
+
+           <div class="card-footer" th:if="${users.id == post.users.id}">
+             <div class="row mb-3">
+               <div class="col-sm-4">
+                 <a th:href="@{/post/delete/{postsId}(postsId=${post.id})}" class="btn btn-danger">削除する</a>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="card-body">
+
+           <div th:if="${validationErrors != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+             <div th:each="error : ${validationErrors.getAllErrors()}">
+               <i class="bi bi-exclamation-octagon me-1"></i>
+               <span th:text="${error.getDefaultMessage()}"></span>
+             </div>
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+           </div>
+
+           <form class="row g-3" method="post" th:action="@{/comment/create}" th:object="${requestPostComment}">
+
+             <input type="hidden" name="postsId" th:value="${post.id}">
+             <div class="col-md-12">
+               <input type="text" class="form-control comment" name="comment" id="comment" placeholder="コメントを入力...">
+             </div>
+             <div class="err-msg-comment"></div>
+             <div class="text-center">
+               <button type="submit" class="btn btn-primary comment-submit">コメントする</button>
+             </div>
+
+           </form>
+         </div>
+
+         <div class="card-body">
+
+           <div class="news">
+             <div th:each="postcomment : ${post.postCommentsList}">
+		       <div class="post-item clearfix">
+		         <img th:src="${postcomment.users.iconUri}" alt="user-icon">
+		         <a th:href="@{/profile/{usersid} (usersid=${postcomment.users.id})}" >
+		     	   <h4><th th:text="${postcomment.users.name}"></th></h4>
+		     	 </a>
+				 <p th:text="${postcomment.comment}"></p>
+			   </div>
+			   <div class="card-footer" th:if="${users.id == postcomment.users.id}">
+                 <div class="row mb-3">
+                   <div class="col-sm-4">
+                     <a th:href="@{/comment/delete/{postcommentId}(postcommentId=${postcomment.id})}" class="btn btn-danger">削除する</a>
+                   </div>
+                 </div>
+               </div>
+			 </div>
+           </div><!-- End sidebar recent posts-->
+
+         </div>
+       </div>
+     </div>
+   </div>
+ </div><!-- End Left side columns -->
+<!-- ======= フラグメント::Comment ======= -->
 
   <!-- ======= フラグメント::Footer ======= -->
   <div th:fragment="footer">
     <footer id="footer" class="footer">
-      <div class="copyright">
+       <div class="copyright">
         &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
@@ -184,6 +272,7 @@
 
     <!-- Template Main JS File -->
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/commentvalidation.js"></script>
   </div>
   <!-- ======= /フラグメント::Footer ======= -->
 

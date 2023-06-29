@@ -24,29 +24,43 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-	
+
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private UsersService usersService;
-	
+
+	/**
+	 * [GET]ログインアクション
+	 *
+	 * @param model 
+	 * @return　ログインしている場合はホーム画面、ログインしてない場合はログイン画面を表示
+	 */
 	@GetMapping("/login")
 	public String login(Model model) {
-		
+
 		log.info("ログイン画面のアクションが呼ばれました。");
-		
+
 		if(!model.containsAttribute("requestLogin")) {
 			model.addAttribute("requestLogin", new RequestLogin());
 		}
-		
+
 		Users users = (Users) session.getAttribute(AppConst.SESSION_KEY_LOGIN_INFO);
+
+		// すでにログインしているのであればhome画面に遷移
 		if(users != null) {
 			return "redirect:/home";
 		}
 		return "login/index";
 	}
 
+	/**
+	 * [POST]ログインアクション。
+	 *
+	 * @param RequestLogin 入力フォームの内容
+	 * @return　ログイン成功時ホーム画面を表示
+	 */
 	@PostMapping("/login")
 	public String login(@Validated @ModelAttribute RequestLogin requestLogin,
 		BindingResult result,
@@ -65,7 +79,6 @@ public class LoginController {
 			// ログイン画面へリダイレクト。
 			return "redirect:/login";
 		}
-
 
 		// ログインIDとパスワードを取得。
 		String loginId = requestLogin.getLoginId();
@@ -94,11 +107,16 @@ public class LoginController {
 		// ホーム画面へリダイレクト。
 		return "redirect:/home";
 	}
-	
+
+	/**
+	 * [GET]ログアウトアクション
+	 * 
+	 * @return　ログイン画面を表示
+	 */
 	@GetMapping("logout")
 	public String logout() {
 		session.removeAttribute(AppConst.SESSION_KEY_LOGIN_INFO);
-		
+
 		return "redirect:/login";
 	}
 }

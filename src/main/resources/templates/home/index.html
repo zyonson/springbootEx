@@ -2,59 +2,109 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <!-- ======= Head ======= -->
-<div th:replace="~{common/shoulder_fragment::head(title = 'Home')}"></div>
+<div th:replace="~{common/shoulder_fragment::head(title = 'SNSサイト - Home')}"></div>
 
 <body>
 
   <!-- ======= Header ======= -->
   <div th:replace="~{common/shoulder_fragment::header}"></div>
 
+  <!-- ======= Sidebar ======= -->
+  <div th:replace="~{common/shoulder_fragment::sidebar}"></div>
+  
   <main id="main" class="main">
 
     <div class="pagetitle">
       <h1>Home</h1>
     </div><!-- End Page Title -->
 
-    <section class="section">
+    <section class="section dashboard">
       <div class="row">
-        <div class="col-lg-12">
+        <div th:replace="~{common/shoulder_fragment::comment}"></div>
+
+        <div class="col-lg-4">
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">トピック一覧</h5>
+              <h5 class="card-title">今の気持ちをシェアしよう！</h5>
 
-              <p><a href="/topic/input" class="btn btn-primary">トピックを投稿する</a></p>
-
-              <!-- Table with stripped rows -->
-              <div th:if="${@collectionUtil.isEmpty(topicsList)}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle me-1"></i>
-                まだトピックは投稿されていません。
+              <div th:if="${validationErrorsPost != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div th:each="errorPost : ${validationErrorsPost.getAllErrors()}">
+                  <i class="bi bi-exclamation-octagon me-1"></i>
+                  <span th:text="${errorPost.getDefaultMessage()}">エラーメッセージを表示します。</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-              <table th:if="${@collectionUtil.isNotEmpty(topicsList)}" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">タイトル</th>
-                    <th scope="col">本文</th>
-                    <th scope="col">ニックネーム</th>
-                    <th scope="col">投稿日時</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="topics:${topicsList}">
-                    <th scope="row"><a th:href="@{/topic/detail/{id}(id=${topics.id})}" th:text="${topics.id}">1</a></th>
-                    <td><a th:href="@{/topic/detail/{id}(id=${topics.id})}" th:text="${topics.title}">Brandon Jacob</a></td>
-                    <td><a th:href="@{/topic/detail/{id}(id=${topics.id})}" th:text="${@stringUtil.abbreviate(topics.body, 40)}">Designer</a></td>
-                    <td th:text="${topics.users.name}">佐藤太郎</td>
-                    <td th:text="${#dates.format(topics.created, 'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
-                  </tr>
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
 
+              <!-- Vertical Form -->
+              <form class="row g-3" method="post" novalidate th:action="@{/post/regist}" th:object="${RequestPost}" enctype="multipart/form-data">
+                
+                <div class="col-12">
+                  <label for="post-title" class="form-label">タイトル</label>
+                  <input type="text" name="title" class="form-control" id="post-title">
+                  <div class="err-msg-title"></div>
+               </div>
+               
+               <div class="col-12">
+                 <label for="post-body" class="form-label">本文</label>
+                 <textarea name="body" class="form-control" id="post-body" style="height: 100px"></textarea>
+                 <div class="err-msg-body"></div>
+               </div>
+               
+               <div class="col-12">
+                 <label for="formFile" class="form-label">写真</label>
+                 <input class="form-control" type="file" id="formFile" name="profileFile">
+                 <div class="err-msg-file"></div>
+               </div>
+                  
+               <div class="text-center">
+                 <button type="submit" class="btn btn-primary submit">投稿する</button>
+               </div>
+             </form><!-- Vertical Form -->
             </div>
           </div>
-        </div>
+
+          <!-- News & Updates Traffic -->
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title">ニュース</h5>
+
+              <div class="news">
+                <div class="post-item clearfix">
+                  <img src="/assets/img/news-1.jpg" alt="">
+                  <h4><a href="users-profile.jsp">今週ランチです。</a></h4>
+                  <p>ハヤシライス、ピリ辛味噌バターコーンのスープパスタを食べてきました。...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="/assets/img/news-2.jpg" alt="">
+                  <h4><a href="users-profile.jsp">様々なカクテルに秘められたストーリーをチェック</a></h4>
+                  <p>ハイビスカス香るまろやかなホットカクテルで、冬の寒さをくつろぎながら乗り切りましょう！...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="/assets/img/news-3.jpg" alt="">
+                  <h4><a href="users-profile.jsp">【MEN】HOW TO FIND THE BEST SUIT for FRESHERS CAMPAIGN</a></h4>
+                  <p>新しい季節を迎え、新しい門出を迎えるお客様へポール・スチュアートの特別なメニューをご用意しました。...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="/assets/img/news-4.jpg" alt="">
+                  <h4><a href="users-profile.jsp">20歳から続けていたトライアスロンを、仕事に集中するため一時的にやめてみたら</a></h4>
+                  <p>トライアスロンの練習は疲労をもたらします。でも習慣にしている練習をやめてしまうと、もっと体が疲労するというのです。...</p>
+                </div>
+
+                <div class="post-item clearfix">
+                  <img src="/assets/img/news-5.jpg" alt="">
+                  <h4><a href="users-profile.jsp">こんにちは！</a></h4>
+                  <p>東京は、日中は日差しが出て少し気温が上がったように感じます...</p>
+                </div>
+
+              </div><!-- End sidebar recent posts-->
+            </div>
+          </div><!-- End News & Updates -->
+        </div><!-- End Right side columns -->
       </div>
     </section>
 
@@ -62,6 +112,9 @@
 
   <!-- ======= Footer ======= -->
   <div th:replace="~{common/shoulder_fragment::footer}"></div>
+
+　<script src="/assets/js/main.js"></script>
+  <script src="/assets/js/postvalidation.js"></script>
 
 </body>
 

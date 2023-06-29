@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
-	
+
 	@Autowired
 	private UsersService usersService;
 
@@ -32,11 +32,11 @@ public class AccountController {
 	public String index() {
 		return "/account/index";
 	}
-	
+
 	@PostMapping("/regist")
 	public String regist(@Validated @ModelAttribute RequestAccount requestAccount,
-			BindingResult result,
-			RedirectAttributes redirectAttributes) {
+		BindingResult result,
+		RedirectAttributes redirectAttributes) {
 
 		log.info("アカウント作成処理のアクションが呼ばれました。：requestAccount={}", requestAccount);
 
@@ -51,7 +51,6 @@ public class AccountController {
 			// 入力画面へリダイレクト。
 			return "redirect:/account";
 		}
-
 
 		String loginId = requestAccount.getLoginId();
 
@@ -70,7 +69,6 @@ public class AccountController {
 			// 入力画面へリダイレクト。
 			return "redirect:/account";
 		}
-
 
 		// データ登録処理。
 		usersService.save(requestAccount);
