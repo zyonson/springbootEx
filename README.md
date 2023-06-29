@@ -61,5 +61,66 @@ src
 
 # 画面説明
 
-ログイン画面 
+## ログイン画面 
+ログイン画面です。
+<img width="1250" alt="login" src="https://github.com/zyonson/springbootEx/assets/96770605/2bdf0ac9-5203-4143-b89b-32701c30bd03">
+
+- ログインID、パスワードを入力しログインします。
+- ログインID、パスワードは必須入力です。
+
+<img width="1249" alt="loginValidationJs" src="https://github.com/zyonson/springbootEx/assets/96770605/c9b203ca-9aab-411a-a020-5edd3f0c7b9f">
+
+- ログインID、パスワードを入力しなかった場合、jsでバリデーションを行いエラーとします。
+
+<img width="1246" alt="loginValidation" src="https://github.com/zyonson/springbootEx/assets/96770605/7dd652d1-5789-461b-a174-002478ea4353">
+
+- HTMLの改ざんを考慮し、jsのバリデーションを改ざんされた場合、サーバサイドでバリデーションを行います。
+
+## アカウント作成画面
+アカウント作成画面です。
+<img width="1250" alt="createAccount" src="https://github.com/zyonson/springbootEx/assets/96770605/744fce8d-f1c8-4856-90ad-314cffd6226d">
+
+- 「お名前」「ログインID」「パスワード」を入力し、ログインします。
+- 「お名前」「ログインID」「パスワード」は必須入力です。
+
+<img width="1350" alt="createAccountValidationJs" src="https://github.com/zyonson/springbootEx/assets/96770605/fdb01221-66c8-48f4-b50f-fdd65d8c75b0">
+
+- 「お名前」「ログインID」「パスワード」を入力しなかった場合、jsでバリデーションを行いエラーとします。
+
+<img width="1234" alt="createAccountValidation" src="https://github.com/zyonson/springbootEx/assets/96770605/b367410e-90b3-4372-9b25-3f92443fa760">
+
+- HTMLの改ざんを考慮し、jsのバリデーションを改ざんされた場合、サーバサイドでバリデーションを行います。
+
+<img width="1248" alt="accountComplete" src="https://github.com/zyonson/springbootEx/assets/96770605/79eb49d8-c19e-4f6f-b842-b568e9b3ec06">
+
+- 正常に入力が行われた場合、完了画面へ遷移しアカウントが登録されます。
+
+## ホーム画面
+<img width="1230" alt="home" src="https://github.com/zyonson/springbootEx/assets/96770605/427f4701-9e3b-465f-833c-e86ba47923cf">
+
+## 投稿画面
+投稿画面です。
+
+<img width="1230" alt="home" src="https://github.com/zyonson/springbootEx/assets/96770605/427f4701-9e3b-465f-833c-e86ba47923cf">
+
+- 「タイトル」「本文」を入力し「写真」を選択し、投稿します。
+
+<img width="1231" alt="postValidationJs" src="https://github.com/zyonson/springbootEx/assets/96770605/e251a882-da91-4ec4-b107-cd2c6eb3fb1b">
+
+- 「タイトル」「本文」を入力しなかった場合、また「写真」を選択しなかった場合、jsでバリデーションを行いエラーとします。
+
+<img width="1237" alt="successPost" src="https://github.com/zyonson/springbootEx/assets/96770605/081e8281-a727-4ca2-a0bc-519c5e053fa5">
+
+- 投稿に成功した際、ホーム画面に遷移し、フラッシュメッセージを表示します。
+
+## コメント画面
+投稿にコメントをする機能です。
+
+<img width="936" alt="comment" src="https://github.com/zyonson/springbootEx/assets/96770605/7aa6bdc3-af14-496c-824b-886c0d3cb7f2">
+
+- 「コメント」を入力します。
+
+<img width="936" alt="commentValidationJs" src="https://github.com/zyonson/springbootEx/assets/96770605/ff06323a-b7ed-451b-9cb7-6229c871d966">
+
+- 「コメント」を入力しなかった場合、jsでバリデーションを行いエラーとします。
 
