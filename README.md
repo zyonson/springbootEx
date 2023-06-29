@@ -28,3 +28,38 @@ springbootの機能を一通り学習するために作ったアプリケーシ�
 
 ## DB設計
 
+![eg_sns_erd](https://github.com/zyonson/springbootEx/assets/96770605/0bffee3f-80c3-4a8b-8dc5-c89b67554ca2)
+
+## パッケージ構成図
+```bash
+src
+└─main
+    ├─java
+    │  └─jp
+    │      └─dcworks
+    │          └─engineersgate
+    │              └─egbbs
+    │                  ├─controller      # コントローラクラスの管理。
+    │                  ├─core            # コアクラスの管理。アプリ基底処理及び、設定に関する処理のプログラム群。
+    │                  │  └─annotation
+    │                  ├─dto             # DTOクラスの管理。入力フォーム関連。
+    │                  ├─entity          # DBエンティティクラスの管理。
+    │                  ├─repository      # DBアクセスリポジトリ。
+    │                  ├─service         # リポジトリをラップしたサービスクラス等。他、必要に応じて外部連携等コンポーネント管理。
+    │                  └─util            # ユーティリティクラスの管理。
+    └─resources
+        ├─static                          # 静的ファイル。js、css等。
+        │  └─assets
+        └─templates                       # テンプレートファイル。
+            ├─account
+            ├─common
+            ├─error
+            ├─home
+            ├─login
+            └─topic
+```
+
+# 画面説明
+
+ログイン画面 
+
