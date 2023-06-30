@@ -81,10 +81,10 @@
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <div>
+                  <div th:if="${validationErrorsEdit != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <div th:each="error : ${validationErrors.getAllErrors()}">
                       <i class="bi bi-exclamation-octagon me-1"></i>
-                      <span>エラーメッセージを表示します。</span>
+                      <span th:text="${error.getDefaultMessage()}"></span>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
@@ -125,10 +125,10 @@
                 </div>
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <div>
+                  <div th:if="${validationErrorsPass != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <div th:each="error : ${validationErrorsPass.getAllErrors()}">
                       <i class="bi bi-exclamation-octagon me-1"></i>
-                      <span>エラーメッセージを表示します。</span>
+                      <span th:text="${error.getDefaultMessage()}"></span>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>

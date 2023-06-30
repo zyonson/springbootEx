@@ -92,7 +92,7 @@ public class ProfileController extends AppController{
 	        if(result.hasErrors()) {
 		        log.warn("バリデーションエラーが発生しました。:requestProfile={}, result={}",requestProfile, result);
 
-  		        redirectAttributes.addFlashAttribute("validationErrors",result);
+  		        redirectAttributes.addFlashAttribute("validationErrorsEdit",result);
 		        redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
 
 	     	    return "redirect:/profile";
@@ -147,7 +147,7 @@ public class ProfileController extends AppController{
 	    if(!(user.getPassword().equals(requestpassword.getPassword()))) {
 		    model.addAttribute("usersid", usersid);
 
-		    redirectAttributes.addFlashAttribute("validationErrors", result);
+		    redirectAttributes.addFlashAttribute("validationErrorsPass", result);
             redirectAttributes.addFlashAttribute("requestProfile", requestpassword);
 
 		    return "redirect:/profile/" + usersid;
