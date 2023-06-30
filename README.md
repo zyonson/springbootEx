@@ -124,3 +124,25 @@ src
 
 - 「コメント」を入力しなかった場合、jsでバリデーションを行いエラーとします。
 
+<img width="1233" alt="commentValidation" src="https://github.com/zyonson/springbootEx/assets/96770605/83e3e0e8-b6bc-499c-9748-c451459bd9aa">
+
+- HTMLの改ざんを考慮し、jsのバリデーションを改ざんされた場合、サーバサイドでバリデーションを行います。
+
+## プロフィール画面
+プロフィール画面になります。ログインしているユーザー自身のプロフィール画面の場合、プロフィールやパスワードを変更できます。
+
+<img width="1233" alt="editProfile" src="https://github.com/zyonson/springbootEx/assets/96770605/01c2de56-b665-40b1-ba39-3ce075f3a802">
+
+- プロフィール編集画面になります。
+
+<img width="1232" alt="editProfileJs" src="https://github.com/zyonson/springbootEx/assets/96770605/00bf4aec-e7a0-491f-8a30-3e640cc03bd7">
+
+- 「お名前」「メールアドレス」を入力しなかった場合、jsでバリデーションを行いエラーとします。
+
+<img width="1235" alt="editPassword" src="https://github.com/zyonson/springbootEx/assets/96770605/2c97c353-c311-49bc-93ff-d52a91093033">
+
+- パスワード編集画面になります。
+  
+<img width="1234" alt="editPasswordValidationJs" src="https://github.com/zyonson/springbootEx/assets/96770605/1b35d3f7-f2c2-45a6-b53b-6505f3cc3b41">
+
+「現在のパスワード」「新しいパスワード」を入力しなかった場合、jsでバリデーションを行いエラーとします。
