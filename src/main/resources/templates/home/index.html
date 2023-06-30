@@ -31,7 +31,7 @@
               <div th:if="${validationErrorsPost != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <div th:each="errorPost : ${validationErrorsPost.getAllErrors()}">
                   <i class="bi bi-exclamation-octagon me-1"></i>
-                  <span th:text="${errorPost.getDefaultMessage()}">エラーメッセージを表示します。</span>
+                  <span th:text="${errorPost.getDefaultMessage()}"></span>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
