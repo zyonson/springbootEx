@@ -22,8 +22,8 @@ springbootの機能を一通り学習するために作ったアプリケーシ�
 
 - OS : macOS version 13.3.1(a)
 - IDE : Eclipse 2022-12
-- Java :
-- SpringBoot
+- Java : 17
+- SpringBoot : 3.0.4
 - MySQL : 8.0.33
 
 ## DB設計
@@ -35,28 +35,28 @@ springbootの機能を一通り学習するために作ったアプリケーシ�
 src
 └─main
     ├─java
-    │  └─jp
-    │      └─dcworks
-    │          └─engineersgate
-    │              └─egbbs
-    │                  ├─controller      # コントローラクラスの管理。
-    │                  ├─core            # コアクラスの管理。アプリ基底処理及び、設定に関する処理のプログラム群。
-    │                  │  └─annotation
-    │                  ├─dto             # DTOクラスの管理。入力フォーム関連。
-    │                  ├─entity          # DBエンティティクラスの管理。
-    │                  ├─repository      # DBアクセスリポジトリ。
-    │                  ├─service         # リポジトリをラップしたサービスクラス等。他、必要に応じて外部連携等コンポーネント管理。
-    │                  └─util            # ユーティリティクラスの管理。
+    │   └─com
+    │       └─example
+    │           └─eg_sns
+    │               ├─controller      # コントローラクラスの管理。
+    │               ├─core            # コアクラスの管理。アプリ基底処理及び、設定に関する処理のプログラム群。    
+    │               │   └─annotation
+    │               ├─dto             # DTOクラスの管理。入力フォーム関連。    
+    │               ├─entity          # DBエンティティクラスの管理。
+    │               ├─repository      # DBアクセスリポジトリ。
+    │               ├─service         # リポジトリをラップしたサービスクラス等。他、必要に応じて外部連携等コンポーネント管理。
+    │               └─util            # ユーティリティクラスの管理。
+    │                 
     └─resources
         ├─static                          # 静的ファイル。js、css等。
-        │  └─assets
+        │   └─assets
         └─templates                       # テンプレートファイル。
             ├─account
             ├─common
             ├─error
             ├─home
             ├─login
-            └─topic
+            └─profile
 ```
 
 # 画面説明
@@ -114,7 +114,7 @@ src
 - 投稿に成功した際、ホーム画面に遷移し、フラッシュメッセージを表示します。
 
 ## コメント画面
-投稿にコメントをする機能です。
+投稿にコメントをする画面です。
 
 <img width="936" alt="comment" src="https://github.com/zyonson/springbootEx/assets/96770605/7aa6bdc3-af14-496c-824b-886c0d3cb7f2">
 
@@ -146,3 +146,20 @@ src
 <img width="1234" alt="editPasswordValidationJs" src="https://github.com/zyonson/springbootEx/assets/96770605/1b35d3f7-f2c2-45a6-b53b-6505f3cc3b41">
 
 「現在のパスワード」「新しいパスワード」を入力しなかった場合、jsでバリデーションを行いエラーとします。
+
+## フレンド申請画面
+<img width="1231" alt="friendOffer" src="https://github.com/zyonson/springbootEx/assets/96770605/a5c2e8c5-4c40-4b33-9200-14ac4fcef440">
+
+- 他のユーザーのプロフィール画面の場合右上の 「友達申請」のボタンを押すと友達申請できます。 
+<img width="1244" alt="friendList" src="https://github.com/zyonson/springbootEx/assets/96770605/765463c4-8ac6-4288-8d2a-f067072ca53d">
+
+- 友達申請はキャンセルすることも可能です。
+
+## errorページ画面
+ページが存在しない、システム内で不具合が発生した場合のエラー画面を提供します。
+<img width="1227" alt="error500" src="https://github.com/zyonson/springbootEx/assets/96770605/c117b3fe-1aaf-4ea2-a1ff-b8b1b0ca6d79">
+
+- システムの不具合等により、予期せぬ例外が発生した場合表示します。
+<img width="1233" alt="error404" src="https://github.com/zyonson/springbootEx/assets/96770605/d24d27ea-687a-46dc-886d-bbb1875443c9">
+
+- 遷移したページが見つからなかった場合に表示されるページです。
