@@ -43,6 +43,6 @@ public class HomeController  extends AppController{
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 		model.addAttribute("usersId", usersId);
 
-		return "/home/index";
+		return "home/index";
 	}
 }

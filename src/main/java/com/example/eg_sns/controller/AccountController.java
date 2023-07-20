@@ -30,7 +30,7 @@ public class AccountController {
 
 	@GetMapping(path = {"", "/"})
 	public String index() {
-		return "/account/index";
+		return "account/index";
 	}
 
 	@PostMapping("/regist")
@@ -81,6 +81,6 @@ public class AccountController {
 
 	@GetMapping("/complete")
 	public String complete() {
-		return "/account/complete";
+		return "account/complete";
 	}
 }

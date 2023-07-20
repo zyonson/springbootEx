@@ -42,7 +42,7 @@ public class FriendController extends AppController{
 		model.addAttribute("friendsList", friendsList);
 		model.addAttribute("friendsList2", friendsList2);
 
-		return "/friend/list";
+		return "friend/list";
 	}
 
 	/**
