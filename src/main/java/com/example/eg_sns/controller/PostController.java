@@ -18,9 +18,9 @@ import com.example.eg_sns.entity.Posts;
 import com.example.eg_sns.service.PostImagesService;
 import com.example.eg_sns.service.PostsService;
 import com.example.eg_sns.service.StoragesService;
-import com.example.eg_sns.util.StringUtil;
 
 import lombok.extern.log4j.Log4j2;
+import software.amazon.awssdk.services.s3.S3Client;
 
 @Log4j2
 @Controller
@@ -35,6 +35,12 @@ public class PostController extends AppController {
 
 	@Autowired
 	private StoragesService storagesService;
+
+	private final S3Client s3Client;
+	
+	public PostController(S3Client s3Client) {
+		this.s3Client = s3Client;
+	}
 
 	/**
 	 * [POST]投稿作成アクション。
@@ -61,17 +67,17 @@ public class PostController extends AppController {
 			return "redirect:/home";
 		}
 
-		//アップロードしたファイルが画像ファイル出ない場合、エラーメッセージを格納してhome画面へ
-		if (!storagesService.isImageFile(profileFile)) {
-			log.warn("指定されたファイルは、画像ファイルではありません。:profileFile={}", profileFile);
+		// アップロードしたファイルが画像ファイル出ない場合、エラーメッセージを格納してhome画面へ
+		// if (!storagesService.isImageFile(profileFile)) {
+		//	log.warn("指定されたファイルは、画像ファイルではありません。:profileFile={}", profileFile);
 
-		    result.rejectValue("profileFile", StringUtil.BLANK, "画像ファイルを指定してください。");
-
-		    redirectAttributes.addFlashAttribute("validationErrorsPost", result);
-		    redirectAttributes.addFlashAttribute("requestPost", requestPost);
-
-		    return "redirect:/home";
-		}
+//		    result.rejectValue("profileFile", StringUtil.BLANK, "画像ファイルを指定してください。");
+//
+//		    redirectAttributes.addFlashAttribute("validationErrorsPost", result);
+//		    redirectAttributes.addFlashAttribute("requestPost", requestPost);
+//
+//		    return "redirect:/home";
+//		}
 
 		Long usersId = getUsersId();
 

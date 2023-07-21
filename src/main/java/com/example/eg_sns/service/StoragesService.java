@@ -1,110 +1,75 @@
 package com.example.eg_sns.service;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
-//プロフィール関連サービスクラス。
 @Log4j2
 @Service
 public class StoragesService {
 
-	/**
-	 * ファイルアップロード処理。
-	 *
-	 * @param multipartFile マルチパートで受信したファイル。
-	 * @return ファイルアップロード先の、Webサイトで見たときのドキュメントルートからの相対パスが返却される。
-	 */
-	public String store(MultipartFile multipartFile) {
+    private final S3Client s3Client;
 
-		String fileName = multipartFile.getOriginalFilename();
+    @Value("${aws.s3.bucketName}")
+    private String s3BucketName;
 
-		if (StringUtils.isEmpty(fileName)) {
-			return null;
-		}
+    @Value("${aws.region}")
+    private String awsRegion;
 
-		Path filePath = Paths.get("src/main/resources/static/assets/profileimg/" + fileName);
+    @Value("${aws.accessKey}")
+    private String awsAccessKey;
 
-		OutputStream stream = null;
-		try {
-			byte[] bytes = multipartFile.getBytes();
+    @Value("${aws.secretKey}")
+    private String awsSecretKey;
 
-			stream = Files.newOutputStream(filePath);
+    public StoragesService() {
+        AwsCredentials credentials = AwsBasicCredentials.create(awsAccessKey, awsSecretKey);
+        this.s3Client = S3Client.builder()
+                .region(Region.of(awsRegion))
+                .credentialsProvider(StaticCredentialsProvider.create(credentials))
+                .build();
+    }
 
-			stream.write(bytes);
-		} catch (IOException e) {
-			log.error("ファイルアップロード中にエラーが発生しました。", e);
-			return null;
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					log.error("ファイルアップロードのクローズ処理でエラーが発生しました。", e);
-				}
-			}
-		}
+    public String store(MultipartFile multipartFile) {
+        String fileName = multipartFile.getOriginalFilename();
 
-		return "/assets/profileimg/" + fileName;
-	}
+        if (StringUtils.isEmpty(fileName)) {
+            return null;
+        }
 
-	/**
-	 * ファイルチェック処理。
-	 * 画像ファイルであるか、否かのチェックを行う。
-	 *
-	 * @param multipartFile マルチパートで受信したファイル。
-	 * @return true.画像ファイルである。false.画像ファイルではない。（または、処理中にエラーが発生した場合。）
-	 */
-	public static boolean isImageFile(MultipartFile multipartFile) {
+        try {
+            byte[] bytes = multipartFile.getBytes();
 
-		String fileName = multipartFile.getOriginalFilename();
+            // S3にアップロードする際のファイルパスを指定
+            String s3Key = "profileimg/" + fileName;
 
-		if (StringUtils.isEmpty(fileName)) {
-			return true;
-		}
+            // アップロードリクエストを作成
+            PutObjectRequest request = PutObjectRequest.builder()
+                    .bucket(s3BucketName)
+                    .key(s3Key)
+                    .contentType(multipartFile.getContentType())
+                    .build();
 
-		FileOutputStream fos = null;
-		try {
-			File file = new File(fileName);
-			file.createNewFile();
-			fos = new FileOutputStream(file);
-			fos.write(multipartFile.getBytes());
-			fos.close();
+            // アップロードを実行
+            PutObjectResponse response = s3Client.putObject(request, software.amazon.awssdk.core.sync.RequestBody.fromBytes(bytes));
 
-			if(file != null && file.isFile()) {
-				BufferedImage bi = ImageIO.read(file);
-				if (bi != null) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			log.error("ファイルチェック中にエラーが発生しました。", e);
-			return false;
-		} finally {
-			if (fos != null) {
-				try {
-					fos.close();
-				} catch (IOException e) {
-					log.error("ファイルチェック処理中のクローズ処理でエラーが発生しました。", e);
-				}
-			}
-		}
-	}	
+            // アップロードされたファイルのURLを返す
+            return "https://" + s3BucketName + ".s3." + awsRegion + ".amazonaws.com/" + s3Key;
+        } catch (IOException e) {
+            log.error("ファイルアップロード中にエラーが発生しました。", e);
+            return null;
+        }
+    }
 }
