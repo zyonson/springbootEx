@@ -16,10 +16,10 @@ public class AwsS3Config {
     @Value("${aws.region}")
     private String awsRegion;
 
-    @Value("${aws.accessKey}")
+    @Value("${aws.access.key}")
     private String awsAccessKey;
 
-    @Value("${aws.secretKey}")
+    @Value("${aws.secret.key}")
     private String awsSecretKey;
     
     @Value("${aws.s3.bucketName}")

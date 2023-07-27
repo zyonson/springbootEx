@@ -23,7 +23,6 @@ import com.example.eg_sns.entity.Users;
 import com.example.eg_sns.service.PostsService;
 import com.example.eg_sns.service.StoragesService;
 import com.example.eg_sns.service.UsersService;
-import com.example.eg_sns.util.StringUtil;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -97,18 +96,17 @@ public class ProfileController extends AppController{
 
 	     	    return "redirect:/profile";
 	      }
-
 	      //アップロードしたファイルが画像ファイルか確認
-	      if(!storagesService.isImageFile(profileFile)) {
-		      log.warn("指定されたファイルは、画像ファイルではありません。:requestProfile={}",requestProfile);
+	    //  if(!storagesService.isImageFile(profileFile)) {
+		//      log.warn("指定されたファイルは、画像ファイルではありません。:requestProfile={}",requestProfile);
 
-     	      result.rejectValue("profileFileHidden",StringUtil.BLANK,"画像ファイルを指定してください。");
+     	//     result.rejectValue("profileFileHidden",StringUtil.BLANK,"画像ファイルを指定してください。");
 
-		      redirectAttributes.addFlashAttribute("validationErrors",result);
-		      redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
+		 //     redirectAttributes.addFlashAttribute("validationErrors",result);
+		 //     redirectAttributes.addFlashAttribute("requestProfile",requestProfile);
 
-		      return "redirect:/profile";
-		  }
+		 //     return "redirect:/profile";
+		 // }
 
           //ログインしているユーザーの情報を取得
 	      Users users = getUsers();

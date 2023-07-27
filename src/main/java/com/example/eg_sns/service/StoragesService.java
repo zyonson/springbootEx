@@ -21,25 +21,29 @@ import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 public class StoragesService {
 
     private final S3Client s3Client;
-
-    @Value("${aws.s3.bucketName}")
-    private String s3BucketName;
-
+    
     @Value("${aws.region}")
     private String awsRegion;
 
-    @Value("${aws.accessKey}")
+    @Value("${aws.access.key}")
     private String awsAccessKey;
 
-    @Value("${aws.secretKey}")
+    @Value("${aws.secret.key}")
     private String awsSecretKey;
 
-    public StoragesService() {
+    public StoragesService(
+    		@Value("${aws.region}") String awsRegion,
+            @Value("${aws.access.key}") String awsAccessKey,
+            @Value("${aws.secret.key}") String awsSecretKey) {
+        this.awsRegion = awsRegion;
+        this.awsAccessKey = awsAccessKey;
+        this.awsSecretKey = awsSecretKey;
+
         AwsCredentials credentials = AwsBasicCredentials.create(awsAccessKey, awsSecretKey);
         this.s3Client = S3Client.builder()
-                .region(Region.of(awsRegion))
-                .credentialsProvider(StaticCredentialsProvider.create(credentials))
-                .build();
+            .region(Region.of(awsRegion))
+            .credentialsProvider(StaticCredentialsProvider.create(credentials))
+            .build();
     }
 
     public String store(MultipartFile multipartFile) {
@@ -57,7 +61,7 @@ public class StoragesService {
 
             // アップロードリクエストを作成
             PutObjectRequest request = PutObjectRequest.builder()
-                    .bucket(s3BucketName)
+                    .bucket("egsns")
                     .key(s3Key)
                     .contentType(multipartFile.getContentType())
                     .build();
@@ -66,7 +70,7 @@ public class StoragesService {
             PutObjectResponse response = s3Client.putObject(request, software.amazon.awssdk.core.sync.RequestBody.fromBytes(bytes));
 
             // アップロードされたファイルのURLを返す
-            return "https://" + s3BucketName + ".s3." + awsRegion + ".amazonaws.com/" + s3Key;
+            return "https://" + "egsns" + ".s3." + "ap-northeast-1" + ".amazonaws.com/" + s3Key;
         } catch (IOException e) {
             log.error("ファイルアップロード中にエラーが発生しました。", e);
             return null;
